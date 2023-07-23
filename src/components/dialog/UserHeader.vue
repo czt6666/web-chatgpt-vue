@@ -1,5 +1,8 @@
 <template>
-  <div class="userheader" :class="is_user ? 'user' : 'robot'">
+  <div
+      class="userheader"
+      :class="[is_user ? 'user' : 'robot', layout_mod ? 'mobile' : 'pc']"
+  >
     <div
         class="header curr-header"
         @click="switchOption()"
@@ -18,9 +21,7 @@
                     backgroundSize: 'cover',
                 }"
           @click="changeheader(item)"
-      >
-        <!--                 {{ `url(${item})` }}-->
-      </li>
+      ></li>
     </ul>
   </div>
 </template>
@@ -53,7 +54,10 @@ export default {
     },
   },
   computed: {
-    ...mapState(["userheader"]),
+    ...mapState(["layout_mod"]),
+    ...mapState({
+      userheader: state => state.moduleUserinfo.user_all_info.head
+    }),
     getOptionHeader() {
       let arr = [];
       for (let i = 0; i < 4; i++) {
@@ -86,12 +90,17 @@ export default {
   flex-direction: row;
 }
 
+.userheader.mobile {
+  width: 50px;
+}
+
 .header {
   float: left;
   display: block;
   width: 40px;
   height: 40px;
   border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   cursor: pointer;
 }
 
@@ -105,6 +114,10 @@ export default {
   margin-right: 20px;
   background: url("../../assets/img/user1.jpg") no-repeat;
   background-size: cover;
+}
+
+.user.mobile .curr-header {
+  margin-right: 12px;
 }
 
 .option {

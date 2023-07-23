@@ -7,12 +7,6 @@
           <Dialogue v-show="logs.length"/>
           <welcome v-show="!logs.length"/>
         </vue-scroll>
-        <!--        <vue-scroll :ops="ops_shu">-->
-        <!--          <vue-scroll :ops="ops_heng">-->
-        <!--            <Dialogue v-show="logs.length"/>-->
-        <!--            <welcome v-show="!logs.length"/>-->
-        <!--          </vue-scroll>-->
-        <!--        </vue-scroll>-->
         <Input/>
       </section>
     </main>
@@ -20,24 +14,16 @@
 </template>
 
 <script>
-import Input from "@/components/Input";
+import Input from "@/components/input/AskInput";
 import Dialogue from "@/components/dialog/Dialogue";
-import Introduce from "@/components/Introduce";
 import sideBar from "@/components/sideBar/sideBar";
 import topBar from "@/components/topBar/topBar";
-import welcome from "@/components/welcome";
-import {mapState} from "vuex";
+import welcome from "@/components/welcome/welcome";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "ChatGpt",
-  components: {Input, Dialogue, Introduce, sideBar, topBar, welcome},
-  computed: {
-    ...mapState(["layout_mod", "client_width", "client_height"]),
-    ...mapState({
-      logs: state => state.moduleDialog.messages,
-    })
-
-  },
+  components: {Input, Dialogue, sideBar, topBar, welcome},
   data() {
     return {
       ops: {
@@ -51,32 +37,13 @@ export default {
           background: "#c1c1c1",
         },
       },
-      ops_shu: {
-        scrollPanel: {
-          scrollingX: true,
-          scrollingY: true,
-          speed: 300,
-        },
-        bar: {
-          keepShow: false,
-          background: "#c1c1c1",
-        },
-      },
-      ops_heng: {
-        scrollPanel: {
-          scrollingX: true,
-          scrollingY: true,
-          speed: 300,
-        },
-        bar: {
-          keepShow: true,
-          background: "#c1c1c1",
-        },
-      },
     };
   },
-  methods: {},
-  created() {
+  computed: {
+    ...mapState(["client_width", "client_height"]),
+    ...mapGetters({
+      logs:"moduleDialog/display_messages"
+    }),
   },
 };
 </script>
@@ -99,7 +66,9 @@ main {
 section {
   overflow: hidden;
   position: relative;
-  width: 100%;
+  flex: 1;
+  width: 0;
+  /* width: 100%; */
   height: 100vh;
   /* background-color: lightblue; */
 }

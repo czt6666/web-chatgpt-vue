@@ -16,16 +16,6 @@ Vue.use(ElementUI);
 // new VConsole();
 // Vue.prototype.$vconsole = new VConsole()
 
-// highlight.js 实现语法高亮
-import highlight from 'highlight.js';
-Vue.use(highlight);
-//封装成一个指令
-Vue.directive('highlight', (el) => {
-    let blocks = el.querySelectorAll('pre code')
-    blocks.forEach((block) => {
-        highlight.highlightBlock(block)
-    })
-})
 
 // 新滚动条
 import vuescroll from 'vuescroll';
@@ -39,6 +29,9 @@ Vue.use(vuescroll, {
 
 // 全局函数
 import BaseFun from "./base";
+// 全局外部连接
+import ConfigPlugin from './base/config';
+Vue.use(ConfigPlugin);
 
 Vue.config.productionTip = false;
 

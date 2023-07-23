@@ -1,4 +1,5 @@
 import qs from "qs";
+import Vue from "vue";
 
 function stramFetch(question, context) {
     return new Promise((resolve, reject) => {
@@ -6,7 +7,7 @@ function stramFetch(question, context) {
         const requestBody = qs.stringify(question);
 
         // 配置请求头
-        const token = window.localStorage.getItem("Token-gpt-2");
+        const token = window.localStorage.getItem(Vue.prototype.$config.TOKEN_KEY);
         const headers = {
             "Content-Type": "application/x-www-form-urlencoded",
         };
@@ -14,7 +15,9 @@ function stramFetch(question, context) {
             headers.Authorization = token;
         }
 
-        fetch("https://czt666.cn:5054/api/stream/askchatgpt", {
+        const baseURL = process.env.VUE_APP_BASE_API;
+        // fetch("https://czt666.cn:5055/api/stream/askchatgpt", {
+        fetch(baseURL + "/api/stream/askchatgpt", {
             method: "POST",
             headers,
             body: requestBody
@@ -22,13 +25,13 @@ function stramFetch(question, context) {
             .then(response => {
                 const reader = response.body.getReader();
                 // console.log(response.headers.get('token'));
-                if (response.headers.get('token')) {
-                    localStorage.setItem("Token-gpt-2", response.headers.get('token'));
+                if (response.headers.get("token")) {
+                    localStorage.setItem(Vue.prototype.$config.TOKEN_KEY, response.headers.get("token"));
                 }
                 return new ReadableStream({
                     start(controller) {
                         function push() {
-                            reader.read().then(({done, value}) => {
+                            reader.read().then(({ done, value }) => {
                                 if (done) {
                                     controller.close();
                                     return;
@@ -48,7 +51,7 @@ function stramFetch(question, context) {
                 let prevalue = "";
 
                 function readStream() {
-                    reader.read().then(({done, value}) => {
+                    reader.read().then(({ done, value }) => {
                         if (done) {
                             // 对于最后一次返回去除 {"status" 之前的字符，方便进行 JSON.parse()
                             for (let i = 0; i < prevalue.length; i++) {
@@ -59,7 +62,6 @@ function stramFetch(question, context) {
                                     break;
                                 }
                             }
-                            // console.log(prevalue);
                             // 格式化响应内容
                             let result = "";
                             try {
@@ -75,11 +77,11 @@ function stramFetch(question, context) {
                         }
                         let text = decoder.decode(value);
                         prevalue = text;
-                        if(text.includes('[FINISH]')){
-                            text = text.split('[FINISH]')[0]
+                        if (text.includes("[FINISH]")) {
+                            text = text.split("[FINISH]")[0];
                         }
                         // console.log(">>>", text, "<<<");
-                        context.commit('STREAMUPDATEMESSAGE',text);
+                        context.commit("STREAMUPDATEMESSAGE", text);
                         readStream();
                     });
                 }
@@ -92,10 +94,4 @@ function stramFetch(question, context) {
     });
 }
 
-// const ask = '用js写一个轮播图'
-// const message = [{ "role": "user", "content": ask }]
-// const formdata = new FormData()
-// formdata.append('ask', ask)
-// formdata.append('messages', JSON.stringify(message))
-// const data = new URLSearchParams(formdata.entries());
 export default stramFetch;

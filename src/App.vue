@@ -1,18 +1,24 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <popupIndex/>
   </div>
 </template>
 
 <script>
+import popupIndex from "@/components/popup/PopupIndex";
+
 export default {
   name: "App",
   computed: {},
+  components: {popupIndex},
   mounted() {
   },
   created() {
-    this.$store.dispatch("requserheader");
+    // this.$store.dispatch("requserheader");
+    this.$store.dispatch("reqinitconfig");
     this.$store.dispatch("moduleDialog/reqallsession");
+    this.$store.dispatch("moduleUserinfo/requserallinfo")
     this.$store.dispatch("hitsindex");
     // 改变屏幕适配 和 html_font_size
     const width = document.body.clientWidth;

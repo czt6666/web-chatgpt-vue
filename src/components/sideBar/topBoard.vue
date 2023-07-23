@@ -12,7 +12,7 @@
     </dialogItem>
     <vue-scroll :ops="ops" class="top-scroll">
       <dialogItem
-          v-for="(item, index) of session_display"
+          v-for="(item, index) of display_session"
           :key="index"
           :info="{
                     title: item.title,
@@ -42,7 +42,7 @@
 
 <script>
 import dialogItem from "@/components/sideBar/dialogItem";
-import {mapState} from "vuex";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "topBoard",
@@ -80,7 +80,6 @@ export default {
     },
     // 通过 ID 删除 session
     deleteSessionById(item) {
-      console.log("删掉session", item);
       this.$store.dispatch("moduleDialog/deletesession", item.id);
     },
     // 切换 session
@@ -100,11 +99,12 @@ export default {
   computed: {
     ...mapState({
       current_session_id: state => state.moduleDialog.current_session_id,
-      session: state => state.moduleDialog.session
+      session: state => state.moduleDialog.session,
+      all_session: state => state.moduleDialog.all_session,
     }),
-    session_display() {
-      return this.session.slice().reverse();
-    }
+    ...mapGetters({
+      display_session: "moduleDialog/display_session"
+    }),
   }
 };
 </script>

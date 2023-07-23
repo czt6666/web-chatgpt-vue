@@ -1,7 +1,8 @@
-import axios from "axios";
 // 进度条
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
+import axios from "axios";
+import Vue from "vue";
 
 const request = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
@@ -11,7 +12,7 @@ const request = axios.create({
 // 请求拦截器 
 request.interceptors.request.use((config) => {
     // 在这里 配置请求头
-    let token = window.localStorage.getItem("Token-gpt-2");
+    let token = window.localStorage.getItem(Vue.prototype.$config.TOKEN_KEY);
     if (token) {
         //将token放到请求头发送给服务器,将tokenkey放在请求头中
         config.headers.Authorization = token;
@@ -31,7 +32,7 @@ request.interceptors.response.use(
 
         // console.log(res.headers);
         if (res.headers.token) {
-            localStorage.setItem("Token-gpt-2", res.headers.token);
+            localStorage.setItem(Vue.prototype.$config.TOKEN_KEY, res.headers.token);
         }
 
         return result;

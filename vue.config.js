@@ -8,8 +8,8 @@ module.exports = defineConfig({
         proxy: {
             '/api': {
                 // 以 /api 开头的路径，将被代理到target
-                // target: 'http://127.0.0.1:5054',
-                target: 'https://czt666.cn:5054',
+                target: 'http://127.0.0.1:5056',
+                // target: 'https://czt666.cn:5056',
                 changeOrigin: true
             },
         }

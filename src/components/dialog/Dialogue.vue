@@ -1,7 +1,10 @@
 <template>
   <div class="dialog">
-    <!--<LogItem v-for="(item, index) of logs" :key="generateRandomKey()" :info="item"/>-->
-    <logItemPro v-for="(item, index) of logs" :key="generateRandomKey()" :info="item"/>
+    <logItemPro
+        v-for="item of logs_display"
+        :key="generateRandomKey()"
+        :info="item"
+    />
     <div class="block"></div>
   </div>
 </template>
@@ -9,30 +12,31 @@
 <script>
 import LogItem from "./LogItem.vue";
 import logItemPro from "@/components/dialog/LogItemPro";
-import {mapState} from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Dialogue",
   components: {LogItem, logItemPro},
-  data() {
-    return {};
-  },
   methods: {
     generateRandomKey() {
-      return Math.random();
+      return `${parseInt(Math.random() * 1000000)}`;
     },
   },
   computed: {
-    ...mapState({
-      messages: state => state.moduleDialog.messages
+    ...mapGetters({
+      logs: "moduleDialog/display_messages"
     }),
-    logs() {
-      if (this.messages.length !== 0 && this.messages[0].role === "system") {
-        return this.messages.slice(1);
+    logs_display() {
+      if (
+          this.logs.length !== 0 &&
+          this.logs[0].role === "system"
+      ) {
+        // 去除system描述
+        return this.logs.slice(1);
       } else {
-        return this.messages;
+        return this.logs;
       }
-    }
+    },
   },
 };
 </script>
@@ -51,6 +55,5 @@ export default {
   float: left;
   width: 100%;
   height: 100px;
-//background-color: pink;
 }
 </style>

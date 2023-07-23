@@ -2,7 +2,6 @@
   <div class="gpt">
     <main>
       <topBar/>
-      <!--  :style="{height: sectionheight + 'px'}"   -->
       <section>
         <vue-scroll>
           <Dialogue v-show="logs.length"/>
@@ -15,17 +14,16 @@
 </template>
 
 <script>
-import Input from "@/components/Input";
+import Input from "@/components/input/AskInput";
 import Dialogue from "@/components/dialog/Dialogue";
-import Introduce from "@/components/Introduce";
 import sideBar from "@/components/sideBar/sideBar";
 import topBar from "@/components/topBar/topBar";
-import welcome from "@/components/welcome";
-import {mapState} from "vuex";
+import welcome from "@/components/welcome/welcome";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "MChatGpt",
-  components: {Input, Dialogue, Introduce, sideBar, topBar, welcome},
+  components: {Input, Dialogue, sideBar, topBar, welcome},
   data() {
     return {
       ops: {
@@ -46,16 +44,9 @@ export default {
   },
   computed: {
     ...mapState(["layout_mod", "client_width", "client_height"]),
-    ...mapState({
-      logs: (state) => state.moduleDialog.messages,
-    }),
-    // sectionheight() {
-    //   let clientheight = document.body.clientHeight;
-    //   console.log(clientheight - 48);
-    //   return clientheight - 48;
-    // },
-  },
-  created() {
+    ...mapGetters({
+      logs:"moduleDialog/display_messages",
+    })
   },
 };
 </script>

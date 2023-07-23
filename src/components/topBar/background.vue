@@ -1,12 +1,12 @@
 <template>
-  <div class="back" @click.self="hiddenDragBar()"></div>
+  <div class="back" @click.self="hideDragBar()"></div>
 </template>
 
 <script>
 export default {
   name: "background",
   methods: {
-    hiddenDragBar() {
+    hideDragBar() {
       this.$store.commit("CHANG_SIDEBAR", 0);
     },
   },
