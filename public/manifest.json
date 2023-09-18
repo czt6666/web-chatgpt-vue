@@ -1,0 +1,64 @@
+{
+  "short_name": "CharGPT聊天",
+  "name": "CharGPT：通过聊天解决问题",
+  "icons": [
+    {
+      "src": "/img/openai-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/img/openai-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/openai-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/img/openai-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#202123",
+  "shortcuts": [
+    {
+      "name": "开始聊天",
+      "short_name": "开始聊天",
+      "description": "立即开始和ChatGPT聊天",
+      "url": "/",
+      "icons": [{ "src": "/img/openai.png", "sizes": "220x220" }]
+    },
+    {
+      "name": "我的主页",
+      "short_name": "我的主页",
+      "description": "View weather information for tomorrow",
+      "url": "/home",
+      "icons": [{ "src": "/img/user1.jpg", "sizes": "100x100" }]
+    }
+  ],
+  "description": "通过聊天的方式解决任何问题",
+  "screenshots": [
+    {
+      "src": "/img/Screenshot_narrow.png",
+      "type": "image/png",
+      "sizes": "1200x1600",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/images/Screenshot_wide.jpg",
+      "type": "image/jpg",
+      "sizes": "1920x913",
+      "form_factor": "wide"
+    }
+  ]
+}

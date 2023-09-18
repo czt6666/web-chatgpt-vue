@@ -6,11 +6,13 @@
           <i class="close-icon"></i>
         </div>
         <!-- ... -->
-        <About/>
+        <!-- <About /> -->
         <Payment/>
         <Login/>
         <CopyToken/>
         <Collect/>
+        <MoreOption/>
+        <SystemOptions/>
         <!-- ... -->
       </div>
     </div>
@@ -21,12 +23,15 @@
 import About from "@/components/popup/About";
 import Payment from "@/components/popup/Payment";
 import Login from "@/components/popup/Login";
-import {mapGetters} from "vuex";
 import CopyToken from "@/components/popup/CopyToken";
 import Collect from "@/components/popup/Collect";
+import MoreOption from "@/components/popup/MoreOptions";
+import SystemOptions from "@/components/popup/SystemOptions";
+import {mapGetters} from "vuex";
+
 export default {
   name: "PopupIndex",
-  components: {About, Payment, Login, CopyToken,Collect},
+  components: {About, Payment, Login, CopyToken, Collect, MoreOption, SystemOptions},
   computed: {
     ...mapGetters(["show_all_popu"]),
   },
@@ -49,7 +54,7 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 999;
-  background-color: #00000088;
+  background-color: var(--popup-background-color);
 }
 
 .popup {
@@ -59,7 +64,7 @@ export default {
   padding: 70px 10px;
   margin: 0 5px;
   border-radius: 10px;
-  background-color: #f3f3f3;
+  background-color: var(--popup-color);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
   rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
@@ -82,7 +87,7 @@ export default {
   font-size: 26px;
   text-align: center;
   line-height: 40px;
-  color: #888;
+  color: var(--icon-color);
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

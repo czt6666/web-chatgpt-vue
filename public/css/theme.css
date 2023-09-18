@@ -1,0 +1,157 @@
+/* theme.css */
+:root,
+.light-theme {
+  /* common */
+  --notice-dot-color: #fd234e;
+  ---link-color: #00abe4;
+  /* 主题色 */
+  --dark-primary-color: #202123;
+  --light-primary-color: #ffffff;
+
+  /* 欢迎页颜色 */
+  --welcome-page-option-background-color: #f3f3f3;
+  --welcome-page-option-hover-background-color: #e7e7e7;
+  --welcome-page-collect-background-color: #fff8ea;
+  --welcome-page-option-select-background-color: #c4c4c4;
+  --welcome-popup-option-background-color: #e4e4e4;
+  --welcome-popup-option-select-background-color: #c4c4c4;
+
+  /* 对话背景颜色 */
+  --icon-color: #555;
+  --chat-ask-border-color: #ccc;
+  --chat-answer-background-color: #f7f7f7;
+
+  /* 生成文字鼠标颜色 */
+
+
+  /* 表格颜色 */
+
+  /* 提问框颜色 */
+  --question-box-background-color: #ffffff;
+  --question-box-border-color: #aaa;
+  --send-button-color: #069bff;
+  --icp-link-color: rgba(40, 44, 52, 0.75);
+  --tw-ring-offset-shadow: 0 0 transparent;
+  --tw-ring-shadow: 0 0 transparent;
+  --tw-shadow: 0 0 transparent;
+  --tw-la-icon-color: #000;
+
+  /* 侧边栏被选中的颜色 */
+  --sidebar-current-color: #313238;
+  --sidebar-border-color: #4c4d4f;
+  --sidebar-hover-color: #2a2b2f;
+  --sidebar-current-hover-color: #3a3b3f;
+  --sidebar-text-color: #fff;
+  --sidebar-icon-color: #fff;
+
+
+  /* 文字颜色 */
+  --text-color: #333;
+  --border-color: #ccc;
+  --homepage-subtitle-color: #999;
+  --homepage-notice-color: #f6ad55;
+  --homepage-link-color: #00abe4;
+
+  /* 输入框颜色 */
+  --input-box-border-color: #e4e4e4;
+
+  /* 支付模块颜色 */
+  --payment-page1-color: #cee5ff;
+  --payment-page2-color: #ffe6c1;
+  --payment-none-color: #eee9e9;
+
+  /* 弹窗颜色 */
+  --popup-color: #f3f3f3;
+  --popup-background-color: #00000066;
+  --popup-option-color: #e4e4e4;
+  --popup-current-color: #343541;
+  --popup-clear-color: #c41d1d;
+  --popup-confirm-color: #10a37f;
+  --popup-light-font-color: #f3f3f3;
+  --popup-config-sidebar-active-background-color: #343541;
+  --popup-config-active-text-color: #2E8B57;
+
+  /* icon颜色 */
+  --welcome-page-icon-color: ;
+  --faq-icon-color: #888;
+  --faq-icon-hover-color: #222;
+  --faq-icon-background-color: #eee;
+  /* icon背景颜色 */
+}
+
+.dark-theme {
+  /* 主题色 */
+  --dark-primary-color: #202123;
+  --light-primary-color: #343541;
+
+  /* 欢迎页颜色 */
+  --welcome-page-option-background-color: #3e3f4b;
+  --welcome-page-option-hover-background-color: #29292c;
+  --welcome-page-collect-background-color: #696969;
+  --welcome-page-option-select-background-color: #202123;
+  --welcome-popup-option-background-color: #2a2b2c;
+  --welcome-popup-option-select-background-color: #636465;
+
+
+  /* 对话背景颜色 */
+  --icon-color: var(--text-color);
+  --chat-ask-border-color: #444654;
+  --chat-answer-background-color: #444654;
+
+  /* 生成文字鼠标颜色 */
+
+
+  /* 表格颜色 */
+
+  /* 提问框颜色 */
+  --question-box-background-color: #40414f;
+  --question-box-border-color: #30313f;
+  --send-button-color: #069bff;
+  --icp-link-color: rgba(227, 227, 227, 0.75);
+  --tw-ring-offset-shadow: 0 0 transparent;
+  --tw-ring-shadow: 0 0 transparent;
+  --tw-shadow: 0 0 transparent;
+  --tw-la-icon-color: #fff;
+
+  /* 侧边栏被选中的颜色 */
+  --sidebar-current-color: #313238;
+  --sidebar-border-color: #4c4d4f;
+  --sidebar-hover-color: #2a2b2f;
+  --sidebar-current-hover-color: #3a3b3f;
+  --sidebar-text-color: #fff;
+  --sidebar-icon-color: #fff;
+
+
+  /* 文字颜色 */
+  --text-color: #d9d9e3;
+  --border-color: var(--text-color);
+  --homepage-subtitle-color: #999;
+  --homepage-notice-color: #f6ad55;
+  --homepage-link-color: #00abe4;
+
+  /* 单行输入框颜色 */
+  --input-box-border-color: #d9d9e3;
+
+  /* 支付模块颜色 */
+  --payment-page1-color: #355c7d;
+  --payment-page2-color: #008080;
+  --payment-none-color: #666;
+
+  /* 弹窗颜色 */
+  --popup-color: #202123;
+  --popup-background-color: rgba(52, 53, 65, .9);
+  --popup-option-color: #111;
+  --popup-current-color: #343541;
+  --popup-clear-color: #991b1b;
+  --popup-confirm-color: #10a37f;
+  --popup-light-font-color: var(--text-color);
+  --popup-config-sidebar-active-background-color: #343541;
+  --popup-config-active-text-color: #4eee94;
+
+  /* icon颜色 */
+  --welcome-page-icon-color: ;
+  --faq-icon-color: var(--text-color);
+  --faq-icon-hover-color: #fff;
+  --faq-icon-background-color: #40414f;
+  /* icon背景颜色 */
+}

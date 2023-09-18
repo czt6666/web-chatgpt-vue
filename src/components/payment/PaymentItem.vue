@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="box" :class="size">
         <div
             class="card"
             :class="is_current ? 'current' : ''"
@@ -9,7 +9,7 @@
                 {{ info.corner_text }}
             </div>
             <img
-                src="../../assets/img/wx_pay_logo.png"
+                src="../../assets/img/wx_pay_logo-tiny.png"
                 alt=""
                 class="wx-pay-logo"
             />
@@ -25,7 +25,7 @@
 <script>
     export default {
         name: "PaymentItem",
-        props: ["info", "is_current", "clickCallBack"],
+        props: ["info", "is_current", "size", "clickCallBack"],
     };
 </script>
 
@@ -33,18 +33,18 @@
     .box {
         flex: 1;
     }
+
     .card {
         overflow: hidden;
         position: relative;
         display: flex;
         flex-direction: column;
-        /* justify-content: center; */
         align-items: center;
         width: 100%;
         height: 0;
         padding-top: 10px;
         padding-bottom: 120%;
-        background-color: #f8f8f8;
+        background-color: var(--light-primary-color);
         border-radius: 8px;
         box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
         cursor: pointer;
@@ -53,19 +53,22 @@
     /* 卡片内容部分 */
     .wx-pay-logo {
         width: 30%;
-        margin: 20px 0 15px;
+        margin: 25px 0 15px;
     }
+
     .middle {
         position: absolute;
         top: 50%;
         transform: translateY(5%);
     }
+
     .text {
         display: block;
         line-height: 18px;
         font-size: 13px;
         text-align: center;
     }
+
     .value {
         position: absolute;
         bottom: 10px;
@@ -73,12 +76,37 @@
         font-size: 18px;
         font-weight: 700;
     }
+</style>
+<!-- 小号卡片 位置微调 -->
+<style scoped>
+    .small .wx-pay-logo {
+        width: 35%;
+        margin: 12px 0 15px;
+    }
 
+    .small .middle {
+        top: 50%;
+        transform: translateY(5%);
+    }
+
+    .small .text {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .small .value {
+        bottom: 5px;
+        margin-top: 5px;
+        font-size: 18px;
+    }
+</style>
+<style scoped>
     /* 被选中的样式 */
     .card:hover,
     .current {
         outline: 1px solid #f6ad55;
     }
+
     .current:after {
         content: "";
         display: block;
@@ -91,7 +119,9 @@
         border-right: 3px solid #fff;
         border-bottom: 3px solid #fff;
         transform: rotate(45deg) translate(-7px, 3px);
+        z-index: 10;
     }
+
     .current:before {
         content: "";
         display: block;
@@ -102,7 +132,9 @@
         height: 50px;
         transform: rotate(45deg);
         background-color: #f6ad55;
+        z-index: 10;
     }
+
     .corner {
         position: absolute;
         top: 14px;
@@ -115,5 +147,6 @@
         color: #fff;
         transform: rotate(45deg);
         background-color: #f6ad55;
+        z-index: 10;
     }
 </style>

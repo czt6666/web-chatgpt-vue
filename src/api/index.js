@@ -60,21 +60,29 @@ export const deltsessionbyid = (data) =>
         url: "/api/session/deletesessionbyid",
         method: "get",
         responseType: "json",
-        params:data,
+        params: data,
     });
 export const reqdialogbysessionid = (data) =>
     request({
         url: "/api/session/querydialogbysessionid",
         method: "get",
         responseType: "json",
-        params:data,
+        params: data,
     });
-export const reqdeleteallsession = () =>
+export const deleteunfavoritedsessions = () =>
     request({
-        url: "/api/session/deleteallsession",
+        url: "/api/session/deleteunfavoritedsessions",
         method: "get",
         responseType: "json",
     });
+export const collectionsession = (data) =>
+    request({
+        url: "/api/session/collectionsession",
+        method: "get",
+        responseType: "json",
+        params: data,
+    });
+
 
 // 点击量模块
 export const reqhitsindex = () =>

@@ -22,8 +22,8 @@
         height: 100vh;
         padding: 8px;
         flex-direction: column;
-        background-color: #202123;
-        /* background-color: #c5e3f6; */
+        /* background-color: #202123; */
+        background-color: var(--dark-primary-color);
     }
     .top {
         overflow: hidden;

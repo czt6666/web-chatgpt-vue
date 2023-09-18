@@ -1,8 +1,7 @@
-import {deltsessionbyid, reqallsessiondetail,} from "@/api";
-import {Message} from "element-ui";
+import { deltsessionbyid, reqallsessiondetail, deleteunfavoritedsessions, collectionsession, } from "@/api";
+import { Message } from "element-ui";
 import Vue from "vue";
 import stramFetch from "../api/fetch";
-import model from "@/components/welcome/Model";
 
 const state = {
     // 0:没有正在回答   1:正在回答
@@ -12,8 +11,10 @@ const state = {
 
     system_describe: {
         tone: null, // 语气
+        random_tone: null, // 随机语气
         length: null, // 长短
         role: null, // 角色扮演
+        tool: null, // 工具类
     },
 
     all_session: {
@@ -44,7 +45,7 @@ const actions = {
             context.commit("NEWSESSION");
         }
         // 在messages中添加用户提问
-        const mess = {role: "user", content: ask};
+        const mess = { role: "user", content: ask };
         const cur_sen_id = context.state.current_session_id;
         const cur_messages = context.state.all_session[cur_sen_id].messages;
         cur_messages.push(mess);
@@ -59,17 +60,21 @@ const actions = {
         context.commit("STARTASKCHATGPT", cur_messages);
         // 发起请求
         let result = await stramFetch(question, context);
-        // console.log(result);
         context.commit("CHANGEANSING", false);
         if (result.status === 0) {
             // 7.1 回答成功 覆盖之前的回答
             context.commit("FINISHASKCHATGPT", result.data);
-            // 7.2 0元以下弹窗
+            // 7.2 用户欠费超过0元 弹窗 + Message
             if (result.data.payment.show_recharge) {
-                context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
+                const money = result.data.payment.money.toFixed(2);
+                Message({
+                    message: `钱包余额${money}，请充值`,
+                    type: "warning",
+                });
+                context.commit("CHANG_PAYMENT_POPUP", 1, { root: true });
             }
         } else if (result.status === 6) {
-            // 正在更新
+            // 正在更新 限制提问 + Message
             Message({
                 message: result.message,
                 type: "success",
@@ -79,13 +84,14 @@ const actions = {
             // 7.3 服务器繁忙 错误提醒 + 红色回答
             context.commit("FAILASKCHATGPT", `服务器繁忙，请稍后再试`);
         } else if (result.status === 8) {
-            // 用户欠费超过 xx元，弹窗
+            // 用户欠费超过-0.1元，限制提问 + 弹窗 + Message
+            const money = result.data.wallet.toFixed(2);
             Message({
                 message: result.message,
                 type: "warning",
             });
-            context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
-            context.commit("FAILASKCHATGPT", `钱包余额已欠费${result.data.wallet.toFixed(2)}元`);
+            context.commit("CHANG_PAYMENT_POPUP", 1, { root: true });
+            context.commit("FAILASKCHATGPT", `钱包余额已欠费${money}元`);
         } else {
             // 7.4 回答失败 错误提示 + 回答框标红
             Message({
@@ -98,17 +104,38 @@ const actions = {
     // 切换当前session ID
     async switchcurrentsessionid(context, session_id) {
         context.commit("SWITCHCURRENTSESSIONID", session_id);
-        context.commit("CHANG_SIDEBAR", 0, {root: true});
+        context.commit("CHANG_SIDEBAR", 0, { root: true });
     },
-    // 删除 session
+    // 根据id删除 session
     async deletesession(context, session_id) {
         // 异步 api 请求
-        let data = {session_id};
+        let data = { session_id };
         let result = await deltsessionbyid(data);
         // console.log(result);
         if (result.status === 0) {
             context.commit("DELETESESSION", session_id);
-            context.commit("CHANG_SIDEBAR", 0, {root: true});
+            context.commit("CHANG_SIDEBAR", 0, { root: true });
+        }
+    },
+    // 删除未收藏 session
+    async deleteunfavoritedsessions(context) {
+        // 异步 api 请求
+        let result = await deleteunfavoritedsessions();
+        if (result.status === 0) {
+            context.commit("DELETEUNFAVORITEDSESSION");
+        }
+    },
+    // 收藏 session
+    async collectionsession(context, session_id) {
+        // 获取当前 session 是否被收藏
+        const is_collected = context.state.all_session[session_id].is_collect
+        let data = {
+            session_id,
+            new_collect_value: !is_collected // 更改状态
+        };
+        let result = await collectionsession(data);
+        if (result.status === 0) {
+            context.commit("COLLECTSESSION", { id: session_id, result: result.data.is_collect });
         }
     },
 };
@@ -151,9 +178,19 @@ const mutations = {
         });
     },
     // 删除所有 session
-    CLEANALLSESSION(state) {
-        // 清空会话列表 清空message列表 清空current_id
-        state.all_session = {};
+    // CLEANALLSESSION(state) {
+    //     // 清空会话列表 清空message列表 清空current_id
+    //     state.all_session = {};
+    //     state.current_session_id = undefined;
+    // },
+    DELETEUNFAVORITEDSESSION(state) {
+        // 删除未收藏的会话 清空current_id
+        for (let key in state.all_session) {
+            console.log(state.all_session[key]);
+            if (state.all_session[key].is_collect !== 1) {
+                Vue.delete(state.all_session, key);
+            }
+        }
         state.current_session_id = undefined;
     },
     // 删除一个 session
@@ -164,6 +201,11 @@ const mutations = {
         if (state.current_session_id === val) {
             state.current_session_id = undefined;
         }
+    },
+    // 收藏一个 session
+    COLLECTSESSION(state, val) {
+        // 在列表中更改收藏结果
+        Vue.set(state.all_session[val.id], "is_collect", val.result);
     },
     // 开始问 chatgpt
     STARTASKCHATGPT(state, cur_messages) {
@@ -201,6 +243,7 @@ const mutations = {
                 id: session_id,
                 title: val.session.title,
                 model: val.session.model,
+                is_collect: val.session.is_collect,
                 messages: state.all_session[0].messages,
             });
             // 删除临时项
@@ -227,16 +270,41 @@ const mutations = {
                 content: val,
             });
         }
-        // 3. 不混乱了
+        // 不混乱了
         state.is_chaos = false;
     },
-    // 修改聊天 system描述
-    FIXSYSTEM(state, obj) {
+    // 以选项形式 修改system描述
+    FIXSYSTEMOPTION(state, obj) {
+        // type: "length"; value: "最简回答"
         // 两次点击 取消选择
-        const key_zh = obj.val === state.system_describe[obj.key] ? null : obj.val;
-        // 存储被选择的key值 (这样才知道在页面中知道谁被选择了)
-        state.system_describe[obj.key] = key_zh;
-    }
+        const key_zh = obj.value === state.system_describe[obj.type] ? null : obj.value;
+        state.system_describe[obj.type] = key_zh;
+
+        // 随机风格
+        if (obj.type === "random_tone") {
+            if (key_zh === null) {
+                // 取消随机风格
+                state.system_describe.tone = null;
+            } else {
+                // 设置随机风格
+                const random_tone = getRandomKey(Vue.prototype.$config.system.tone)
+                state.system_describe.tone = random_tone;
+            }
+        }
+
+        // 论文模式选项 修改模型
+        const change_model_16k = ["论文模式"];
+        if (change_model_16k.includes(obj.value)) {
+            this.$store.commit(
+                "moduleDialog/CHANGEMEDEL",
+                "gpt-3.5-turbo-16k", { root: true }
+            );
+        }
+    },
+    // 以输入形式，修改system描述
+    FIXSYSTEMINPUT(state, option) {
+        state.system_describe.role = option;
+    },
 };
 
 const getters = {
@@ -246,30 +314,34 @@ const getters = {
     },
     display_messages(state) {
         const cid = state.current_session_id;
-        const asen = state.all_session;
-        if (!asen[cid]) {
+        const asess = state.all_session;
+        if (!asess[cid]) {
             // 当前对话什么东西都没有
             return [];
         }
 
-        return asen[cid].messages;
+        return asess[cid].messages;
     },
     display_session(state) {
         const asen = state.all_session;
         const keys = Object.keys(asen).sort((a, b) => b - a);
         const display = [];
         for (const key of keys) {
-            if (key === '0') continue;
+            if (key === "0") continue;
             display.push(asen[key]);
         }
         return display;
-    }
+    },
+    is_cur_session_favorited(state){
+        return state.all_session[state.current_session_id]?.is_collect || 0
+    },
 };
 
 function getSystemDescription(description, model) {
     // 从prototype中获取对应的描述
     const lib = Vue.prototype.$config.system;
     let tone = lib.tone[description.tone] || "";
+    let tool = lib.tool[description.tool] || "";
     const length = lib.length[description.length] || "";
     let role = "";
     if (description.role) {
@@ -290,10 +362,16 @@ function getSystemDescription(description, model) {
 
     return {
         role: "system",
-        content: `${role}${model_describ}${tone}${length}`
+        content: `${role}${model_describ}${tone}${tool}${length}`
     };
 }
 
+// 随机获取一个key值
+function getRandomKey(obj) {
+    var keys = Object.keys(obj);
+    var randomIndex = Math.floor(Math.random() * keys.length);
+    return keys[randomIndex];
+}
 
 export default {
     namespaced: true,

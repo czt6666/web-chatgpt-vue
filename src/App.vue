@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="themeColor">
     <router-view></router-view>
     <popupIndex/>
   </div>
@@ -7,18 +7,24 @@
 
 <script>
 import popupIndex from "@/components/popup/PopupIndex";
+import {mapState} from "vuex";
 
 export default {
   name: "App",
-  computed: {},
   components: {popupIndex},
+  computed: {
+    themeColor() {
+      if (this.theme) return "light-theme";
+      return "dark-theme";
+    },
+    ...mapState(["theme"])
+  },
   mounted() {
   },
   created() {
-    // this.$store.dispatch("requserheader");
-    this.$store.dispatch("reqinitconfig");
     this.$store.dispatch("moduleDialog/reqallsession");
-    this.$store.dispatch("moduleUserinfo/requserallinfo")
+    this.$store.dispatch("reqinitconfig");
+    this.$store.dispatch("moduleUserinfo/requserallinfo");
     this.$store.dispatch("hitsindex");
     // 改变屏幕适配 和 html_font_size
     const width = document.body.clientWidth;
@@ -36,8 +42,9 @@ export default {
   font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
   sans-serif;
   font-size: 16px;
-  color: #333;
+  color: var(--text-color);
   line-height: 1.75;
+  background-color: var(--light-primary-color);
 }
 
 @font-face {

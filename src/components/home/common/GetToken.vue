@@ -1,7 +1,6 @@
 <template>
     <div class="box2">
         <div class="token-box" @click="copyToken">
-            <!--      <span>登录凭证：</span>-->
             <b>
                 {{ token }}
             </b>
@@ -63,12 +62,11 @@
         overflow: hidden;
         flex: 1;
         height: 30px;
-        color: #333;
+        color: var(--text-color);
         text-overflow: ellipsis;
         text-wrap: nowrap;
         border-radius: 5px;
         cursor: pointer;
-        /* background-color: lightcoral; */
     }
 
     .token-box i {
@@ -76,11 +74,10 @@
         width: 30px;
         height: 30px;
         float: right;
-        border: 1px solid #ccc;
+        border: 1px solid var(--border-color);
         border-radius: 5px;
         text-align: center;
         line-height: 30px;
-        background-color: #e4e4e4;
         cursor: pointer;
     }
 

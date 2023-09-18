@@ -1,7 +1,7 @@
 <template>
-    <div v-show="show_about_popup">
+    <div v-show="1">
         <div class="content">
-            <img class="logo" src="../../assets/img/paimeng1.png" />
+            <img class="logo" src="../../assets/img/openai-2x-blue.png" />
             <h2 class="title">ChatGPT聊天</h2>
             <h3 class="versions">{{ $config.VERSION }}</h3>
             <div class="more">
@@ -66,14 +66,14 @@
     .versions {
         padding-top: 0px;
         font-size: 12px;
-      font-weight: 400;
+        font-weight: 400;
     }
 
     .more {
         margin-top: 6px;
-        border-top: 1px solid #777;
-        border-bottom: 1px solid #777;
-        color: #777;
+        border-top: 1px solid var(--text-color);
+        border-bottom: 1px solid var(--text-color);
+        color: var(--text-color);
     }
 
     .more .item {
@@ -91,7 +91,7 @@
         right: 0;
         height: 10px;
         width: 1px;
-        background-color: #777;
+        background-color: var(--text-color);
     }
 
     .more .item:nth-last-child(1):after {

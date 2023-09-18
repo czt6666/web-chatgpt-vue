@@ -25,7 +25,11 @@ const state = {
         show_login_popup: false,
         show_token_popup: false,
         show_collect_popup: false,
+        show_more_options_popup: false,
+        show_system_options_popup: false,
     },
+    // 0:暗色     1:亮色
+    theme: 1,
     // 网页初始化信息
     init: {
         is_free: false,
@@ -53,31 +57,6 @@ const state = {
         ],
         current_goods_id: "y2000",
         welcome_tips: null,
-        //     [
-        //     {
-        //         icon: "https://czt666.cn/gpt/img/umbrella.svg",
-        //         title: "简单的问候",
-        //         content: ["你好", "你是谁", "很高兴遇见你"],
-        //     },
-        //     {
-        //         icon: "https://czt666.cn/gpt/img/shopping.svg",
-        //         title: "编程实现",
-        //         content: [
-        //             "用js写一个轮播图",
-        //             "用java打印helloworld",
-        //             "用python实现梯度下降算法",
-        //         ],
-        //     },
-        //     {
-        //         icon: "https://czt666.cn/gpt/img/painting.svg",
-        //         title: "AI创作",
-        //         content: [
-        //             "猫的屎臭不臭",
-        //             "四六级考场攻略",
-        //             "父亲节礼物和礼物推荐",
-        //         ],
-        //     },
-        // ],
     },
     // 记录 屏幕宽高
     client_width: 0,
@@ -122,7 +101,7 @@ const actions = {
         }
     },
     async changeheader(context, val) {
-        let data = {header: val};
+        let data = { header: val };
         let result = await changeheader(data);
         // console.log(result);
         if (result.status === 0) {
@@ -160,7 +139,7 @@ const mutations = {
         state.layout_mod = val;
     },
     CHANGE_USERHEADER(state, val) {
-        state.moduleUserinfo.user_all_info.head = val
+        state.moduleUserinfo.user_all_info.head = val;
     },
     CHANG_SIDEBAR(state, val) {
         state.show_sidebar = val;
@@ -180,6 +159,12 @@ const mutations = {
     CHANG_COLLECT_POPUP(state, val) {
         state.show_popup.show_collect_popup = val;
     },
+    CHANG_MORE_OPTIONS_POPUP(state, val) {
+        state.show_popup.show_more_options_popup = val;
+    },
+    CHANG_SYSTEM_OPTIONS_POPUP(state, val) {
+        state.show_popup.show_system_options_popup = val;
+    },
     CHANG_ALL_POPUP(state, val) {
         for (const key in state.show_popup) {
             state.show_popup[key] = val;
@@ -197,6 +182,9 @@ const mutations = {
         }
         // console.log(val);
         state.init = val;
+    },
+    SWITCHTHEME(state) {
+        state.theme = !state.theme
     }
 };
 

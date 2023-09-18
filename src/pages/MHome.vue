@@ -34,5 +34,6 @@
     }
     section {
         width: 100%;
+        background-color: var(--light-primary-color);
     }
 </style>

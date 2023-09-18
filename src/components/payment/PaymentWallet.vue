@@ -1,15 +1,16 @@
 <template>
     <div class="box">
         <div>
-            <h1 class="goods-title">{{display_info.title}}</h1>
-            <span class="wallet">{{display_info.wallet}}</span>
+            <h1 class="goods-title">{{ display_info.title }}</h1>
+            <span class="wallet">{{ display_info.wallet }}</span>
         </div>
-        <h3 class="goods-subtitle">{{display_info.subtitle}}</h3>
+        <h3 class="goods-subtitle">{{ display_info.subtitle }}</h3>
         <div class="paymentbox">
-            <PatmentItem
+            <PatmentItemPro
                 v-for="item of display_info.goods"
                 :key="item.id"
                 :info="item"
+                :size="itemsize"
                 :clickCallBack="changeCurrentGoods"
                 :is_current="display_info.current == item.id"
             />
@@ -18,12 +19,12 @@
 </template>
 
 <script>
-    import PatmentItem from "@/components/payment/PaymentItem";
+    import PatmentItemPro from "@/components/payment/PaymentItemPro";
     import { mapGetters, mapState } from "vuex";
 
     export default {
         name: "PaymentIndex",
-        components: { PatmentItem },
+        components: { PatmentItemPro },
         props: ["display_info"],
         data() {
             return {};
@@ -35,6 +36,14 @@
         },
         computed: {
             ...mapGetters("moduleUserinfo", ["user_wallet"]),
+            ...mapState(["layout_mod"]),
+            itemsize() {
+                if (this.layout_mod) {
+                    return "small";
+                } else {
+                    return "large";
+                }
+            },
         },
     };
 </script>

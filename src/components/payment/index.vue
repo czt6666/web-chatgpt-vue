@@ -2,7 +2,7 @@
     <div class="box payment-index" :class="is_second ? 'second' : ''">
         <ul class="switch">
             <li @click="switchFirst">钱包充值</li>
-            <li @click="switchSecond">包年包月</li>
+            <li @click="switchSecond">购买会员</li>
         </ul>
         <div class="paygoods">
             <PaymentWallet
@@ -15,7 +15,10 @@
             />
         </div>
         <button class="submit" @click="submitPayment">确认支付</button>
-        <span class="miss" @click="helpPayment">支付遇到问题</span>
+        <div class="miss">
+            <span @click="helpCharge">查看完整权益介绍</span>
+            <span @click="helpPayment">支付遇到问题</span>
+        </div>
     </div>
 </template>
 
@@ -52,6 +55,9 @@
                     this.current_goods_id
                 );
             },
+            helpCharge() {
+                window.open(this.$link.charge, "_blank");
+            },
             helpPayment() {
                 window.open(this.$link.payment, "_blank");
             },
@@ -87,30 +93,24 @@
 
 <style scoped>
     .payment-index {
-        --first-color: #cee5ff;
-        --second-color: #eee9e9;
+        --current-panel-color: var(--payment-page1-color);
+        --unselected-panel-color: var(--payment-none-color);
     }
-    .second {
-        --first-color: #eee9e9;
-        --second-color: #ffe6c1;
+    .payment-index.second {
+        --current-panel-color: var(--payment-page2-color);
+        --unselected-panel-color: var(--payment-none-color);
     }
 
+    /* 主要颜色 */
     .paygoods {
         padding: 10px 8px;
         border-radius: 0 0 3px 3px;
-        background-color: var(--first-color);
-    }
-    .second .paygoods {
-        background-color: var(--second-color);
+        background-color: var(--current-panel-color);
     }
     .switch {
         position: relative;
         width: 100%;
         height: 40px;
-        /* 没选中 */
-        /* --first-color: #eee9e9; */
-        /* 选中 */
-        /* --second-color: #c6e2ff; */
     }
     .switch > li {
         display: flex;
@@ -124,15 +124,26 @@
         cursor: pointer;
     }
 
+    /* 切换按钮 */
     .switch > li:nth-child(1) {
         left: 0;
-        background-color: var(--first-color);
+        background-color: var(--current-panel-color);
+        z-index: 5;
+    }
+    .second .switch > li:nth-child(1) {
+        left: 0;
+        background-color: var(--unselected-panel-color);
         z-index: 5;
     }
 
     .switch > li:nth-child(2) {
         right: 0;
-        background-color: var(--second-color);
+        background-color: var(--unselected-panel-color);
+        z-index: 2;
+    }
+    .second .switch > li:nth-child(2) {
+        right: 0;
+        background-color: var(--current-panel-color);
         z-index: 2;
     }
 
@@ -149,12 +160,21 @@
         width: 40px;
     }
 
+    /* 圆角 */
     .switch > li:nth-child(1):after {
         right: -40px;
         background: radial-gradient(
             ellipse farthest-side at 100% 0,
             transparent 100%,
-            var(--first-color) 0%
+            var(--current-panel-color) 0%
+        );
+    }
+    .second .switch > li:nth-child(1):after {
+        right: -40px;
+        background: radial-gradient(
+            ellipse farthest-side at 100% 0,
+            transparent 100%,
+            var(--unselected-panel-color) 0%
         );
     }
 
@@ -163,7 +183,15 @@
         background: radial-gradient(
             ellipse farthest-side at 0% 0,
             transparent 100%,
-            var(--second-color) 0%
+            var(--unselected-panel-color) 0%
+        );
+    }
+    .second .switch > li:nth-child(2):after {
+        left: -40px;
+        background: radial-gradient(
+            ellipse farthest-side at 0% 0,
+            transparent 100%,
+            var(--current-panel-color) 0%
         );
     }
 
@@ -180,6 +208,7 @@
     }
 
     .miss {
+        position: relative;
         display: block;
         width: 100%;
         color: #1e90ff;
@@ -187,7 +216,10 @@
         margin-top: 10px;
         text-decoration: underline;
         text-align: center;
+    }
+    .miss span {
         cursor: pointer;
+        margin: 0 5px;
     }
 </style>
 <style>

@@ -25,7 +25,7 @@
         components: { topBoard, bottomBoard },
         methods: {
             hiddenDragBar() {
-              this.$store.commit("CHANG_SIDEBAR",0)
+                this.$store.commit("CHANG_SIDEBAR", 0);
             },
         },
     };
@@ -37,8 +37,6 @@
         top: 0;
         left: 0;
         z-index: 100;
-        /* width: 90vw; */
-        /* width: 80vw + 64px; */
     }
     .drag {
         float: left;
@@ -47,7 +45,7 @@
         height: 100vh;
         padding: 8px;
         flex-direction: column;
-        background-color: #202123;
+        background-color: var(--dark-primary-color);
     }
     .top {
         overflow: hidden;
@@ -62,7 +60,7 @@
     .border {
         width: 40px;
         height: 40px;
-        border: 2px solid #fff;
+        border: 2px solid var(--border-color);
     }
     .close-icon {
         display: block;

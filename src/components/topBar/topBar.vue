@@ -5,12 +5,14 @@
             <img
                 src="@/assets/svg/menu.svg"
                 class="icon"
+                alt="menu"
                 @click="showDragBar()"
             />
             <span>{{ curr_session_title }}</span>
             <img
                 src="@/assets/svg/add.svg"
                 class="icon-larger"
+                alt="addChat"
                 @click="newChat()"
             />
         </div>
@@ -51,8 +53,10 @@
                 this.$store.commit("CHANG_SIDEBAR", 1);
             },
             newChat() {
-                // console.log("新建一个session");
+                // 新建一个session
                 this.$store.commit("moduleDialog/NEWCHAT");
+                // 总线 让输入框focus
+                this.$bus.$emit("newChat");
             },
         },
         computed: {
@@ -73,9 +77,9 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 12px;
-        color: #fff;
+        color: var(--sidebar-text-color);
         z-index: 100;
-        background-color: #202123;
+        background-color: var(--dark-primary-color);
     }
 
     .icon {

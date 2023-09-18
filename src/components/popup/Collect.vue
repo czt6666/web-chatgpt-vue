@@ -1,7 +1,7 @@
 <template>
     <div v-show="show_collect_popup">
         <div class="content">
-            <h2 class="title">支付成功</h2>
+            <h2 class="title">支付成功！</h2>
             <ul class="shema">
                 <li>请收藏网站，避免走丢</li>
                 <li>请绑定手机号或邮箱，避免账号丢失</li>
