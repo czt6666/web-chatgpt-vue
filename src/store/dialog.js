@@ -1,5 +1,5 @@
-import { deltsessionbyid, reqallsessiondetail, deleteunfavoritedsessions, collectionsession, } from "@/api";
-import { Message } from "element-ui";
+import {deltsessionbyid, reqallsessiondetail, deleteunfavoritedsessions, collectionsession,} from "@/api";
+import {Message} from "element-ui";
 import Vue from "vue";
 import stramFetch from "../api/fetch";
 
@@ -45,7 +45,7 @@ const actions = {
             context.commit("NEWSESSION");
         }
         // 在messages中添加用户提问
-        const mess = { role: "user", content: ask };
+        const mess = {role: "user", content: ask};
         const cur_sen_id = context.state.current_session_id;
         const cur_messages = context.state.all_session[cur_sen_id].messages;
         cur_messages.push(mess);
@@ -71,8 +71,17 @@ const actions = {
                     message: `钱包余额${money}，请充值`,
                     type: "warning",
                 });
-                context.commit("CHANG_PAYMENT_POPUP", 1, { root: true });
+                context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
             }
+        } else if (result.status === 5) {
+            // 用户余额不足0.2元，限制提问 + 弹窗 + Message
+            const money = result.data.money.toFixed(2);
+            Message({
+                message: result.message,
+                type: "warning",
+            });
+            context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
+            context.commit("FAILASKCHATGPT", `钱包余额不足，无法使用GPT4`);
         } else if (result.status === 6) {
             // 正在更新 限制提问 + Message
             Message({
@@ -85,12 +94,12 @@ const actions = {
             context.commit("FAILASKCHATGPT", `服务器繁忙，请稍后再试`);
         } else if (result.status === 8) {
             // 用户欠费超过-0.1元，限制提问 + 弹窗 + Message
-            const money = result.data.wallet.toFixed(2);
+            const money = result.data.money.toFixed(2);
             Message({
                 message: result.message,
                 type: "warning",
             });
-            context.commit("CHANG_PAYMENT_POPUP", 1, { root: true });
+            context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
             context.commit("FAILASKCHATGPT", `钱包余额已欠费${money}元`);
         } else {
             // 7.4 回答失败 错误提示 + 回答框标红
@@ -104,17 +113,17 @@ const actions = {
     // 切换当前session ID
     async switchcurrentsessionid(context, session_id) {
         context.commit("SWITCHCURRENTSESSIONID", session_id);
-        context.commit("CHANG_SIDEBAR", 0, { root: true });
+        context.commit("CHANG_SIDEBAR", 0, {root: true});
     },
     // 根据id删除 session
     async deletesession(context, session_id) {
         // 异步 api 请求
-        let data = { session_id };
+        let data = {session_id};
         let result = await deltsessionbyid(data);
         // console.log(result);
         if (result.status === 0) {
             context.commit("DELETESESSION", session_id);
-            context.commit("CHANG_SIDEBAR", 0, { root: true });
+            context.commit("CHANG_SIDEBAR", 0, {root: true});
         }
     },
     // 删除未收藏 session
@@ -128,14 +137,27 @@ const actions = {
     // 收藏 session
     async collectionsession(context, session_id) {
         // 获取当前 session 是否被收藏
-        const is_collected = context.state.all_session[session_id].is_collect
+        const is_collected = context.state.all_session[session_id].is_collect;
         let data = {
             session_id,
             new_collect_value: !is_collected // 更改状态
         };
         let result = await collectionsession(data);
         if (result.status === 0) {
-            context.commit("COLLECTSESSION", { id: session_id, result: result.data.is_collect });
+            context.commit("COLLECTSESSION", {id: session_id, result: result.data.is_collect});
+        }
+    },
+    togglemodle(context) {
+        if (context.state.model === "gpt-4") {
+            context.commit("CHANGEMEDEL", "gpt-3.5-turbo");
+        } else {
+            context.commit("CHANGEMEDEL", "gpt-4");
+            const disabled = localStorage.getItem(
+                "gpt4_usage_notice_popup_disabled"
+            ) === "true";
+            if (!disabled) {
+                context.commit("CHANG_GPT4_NOTICE_POPUP", true, {root: true});
+            }
         }
     },
 };
@@ -157,13 +179,14 @@ const mutations = {
     CHANGEMEDEL(state, val) {
         state.model = val;
     },
-    NEWCHAT(state, tone) {
+    NEWCHAT(state) {
         // 将聊天自定义配置设为 null
         for (let key in state.system_describe) {
+            // 不清空自定义指令
+            if (key === "role") continue;
             state.system_describe[key] = null;
         }
         // 设置 语气tone
-        state.system_describe.tone = tone || undefined;
         state.current_session_id = undefined;
         this.commit("CHANG_SIDEBAR", 0);
     },
@@ -174,7 +197,8 @@ const mutations = {
         // 新建一个索引为0的session
         Vue.set(state.all_session, 0, {
             // 添加一条system描述
-            messages: [description]
+            messages: [description],
+            model: state.model,
         });
     },
     // 删除所有 session
@@ -287,7 +311,7 @@ const mutations = {
                 state.system_describe.tone = null;
             } else {
                 // 设置随机风格
-                const random_tone = getRandomKey(Vue.prototype.$config.system.tone)
+                const random_tone = getRandomKey(Vue.prototype.$config.system.tone);
                 state.system_describe.tone = random_tone;
             }
         }
@@ -295,11 +319,12 @@ const mutations = {
         // 论文模式选项 修改模型
         const change_model_16k = ["论文模式"];
         if (change_model_16k.includes(obj.value)) {
-            this.$store.commit(
-                "moduleDialog/CHANGEMEDEL",
-                "gpt-3.5-turbo-16k", { root: true }
-            );
+            state.model = "gpt-3.5-turbo-16k";
         }
+
+        // 计算当前system描述
+        const describe = getSystemDescription(state.system_describe, state.model);
+        Vue.prototype.$bus.$emit("ChooseSystemOption", describe.content);
     },
     // 以输入形式，修改system描述
     FIXSYSTEMINPUT(state, option) {
@@ -311,6 +336,14 @@ const getters = {
     curr_session_title(state) {
         const session = state.all_session[state.current_session_id];
         return session?.title || "";
+    },
+    curr_session_model(state) {
+        const session = state.all_session[state.current_session_id];
+        return session?.model || "";
+    },
+    curr_session_system(state) {
+        const session = state.all_session[state.current_session_id];
+        return session?.messages[0].content || "";
     },
     display_messages(state) {
         const cid = state.current_session_id;
@@ -332,8 +365,8 @@ const getters = {
         }
         return display;
     },
-    is_cur_session_favorited(state){
-        return state.all_session[state.current_session_id]?.is_collect || 0
+    is_cur_session_favorited(state) {
+        return state.all_session[state.current_session_id]?.is_collect || 0;
     },
 };
 
@@ -345,7 +378,7 @@ function getSystemDescription(description, model) {
     const length = lib.length[description.length] || "";
     let role = "";
     if (description.role) {
-        role = description.role + "。";
+        role = `${description.role}。`;
     }
 
     // 处理随机风格

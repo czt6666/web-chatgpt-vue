@@ -15,6 +15,7 @@
                 :is_current="display_info.current == item.id"
             />
         </div>
+        <h3 class="goods-subtitle">{{ display_info.notice }}</h3>
     </div>
 </template>
 

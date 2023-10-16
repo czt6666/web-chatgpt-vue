@@ -3,7 +3,7 @@ import {
     changeuserphone, changeuseremail, recoveraccountbyphone,
     recoveraccountbyemail, recoveraccountbytoken,
 } from "@/api";
-import {Message} from "element-ui";
+import { Message } from "element-ui";
 import router from "@/router";
 
 const state = {
@@ -31,10 +31,11 @@ const actions = {
             if (router.currentRoute.path.includes("/home")) {
                 // 在账号信息页面 弹提示框
                 Message({
-                    duration: 0,
-                    showClose: true,
+                    // duration: 2000,
+                    // showClose: true,
                     type: "warning",
-                    message: "未查询到账号，向ChatGPT提问以创建账号",
+                    message: "请先向ChatGPT提问",
+                    // message: "未查询到账号，向ChatGPT提问以创建账号",
                 });
             }
         }
@@ -49,7 +50,7 @@ const actions = {
         }
     },
     async changeusernick(context, val) {
-        let data = {nick: val};
+        let data = { nick: val };
         let result = await changeusernick(data);
         // console.log(result);
         if (result.status === 0) {
@@ -63,7 +64,7 @@ const actions = {
         }
     },
     async changeuserphone(context, val) {
-        let data = {phone: val};
+        let data = { phone: val };
         let result = await changeuserphone(data);
         // console.log(result);
         if (result.status === 0) {
@@ -72,7 +73,7 @@ const actions = {
         resultHandle(result, "手机号", "修改");
     },
     async changeuseremail(context, val) {
-        let data = {email: val};
+        let data = { email: val };
         let result = await changeuseremail(data);
         // console.log(result);
         if (result.status === 0) {
@@ -81,7 +82,7 @@ const actions = {
         resultHandle(result, "邮箱", "修改");
     },
     async recoveraccountbyphone(context, val) {
-        let data = {phone: val};
+        let data = { phone: val };
         let result = await recoveraccountbyphone(data);
         // console.log(result);
         if (result.status === 0) {
@@ -93,7 +94,7 @@ const actions = {
         resultHandle(result, "手机号", "登录");
     },
     async recoveraccountbyemail(context, val) {
-        let data = {email: val};
+        let data = { email: val };
         let result = await recoveraccountbyemail(data);
         console.log(result);
         if (result.status === 0) {
@@ -105,7 +106,7 @@ const actions = {
         resultHandle(result, "邮箱", "登录");
     },
     async recoveraccountbytoken(context, val) {
-        let data = {token: val};
+        let data = { token: val };
         let result = await recoveraccountbytoken(data);
         // console.log(result);
         if (result.status === 0) {
@@ -156,9 +157,9 @@ const getters = {
     // 获取用户钱包余额
     user_wallet(state) {
         try {
-            if (state.user_all_info.is_vip) {
-                return "无穷";
-            }
+            // if (state.user_all_info.is_vip) {
+            //     return "无穷";
+            // }
             const money = Number(state.user_all_info.wallet).toFixed(2);
             return money + "元";
         } catch (error) {

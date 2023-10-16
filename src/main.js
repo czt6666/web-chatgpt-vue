@@ -8,9 +8,10 @@ import VueRouter from "vue-router";
 import router from "./router";
 
 import "element-ui/lib/theme-chalk/index.css";
-import { Message, Switch } from "element-ui";
+import {Message, Switch, Checkbox} from "element-ui";
 
 Vue.use(Switch);
+Vue.use(Checkbox);
 Vue.prototype.$message = Message;
 
 // 新滚动条

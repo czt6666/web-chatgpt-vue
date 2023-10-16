@@ -145,7 +145,7 @@
                     el.classList.add("start");
                 }, 1500);
                 // 复制到剪切板
-                copyToClipboard(code);
+                copyToClipboard(code, this);
             },
             // 复制当前内容
             copyParagraph(event) {
@@ -158,7 +158,7 @@
                     el.classList.add("start");
                 }, 1500);
                 // 复制到剪切板
-                copyToClipboard(this.source);
+                copyToClipboard(this.source, this);
             },
         },
         computed: {
@@ -208,7 +208,7 @@
         }
     }
 
-    function copyToClipboard(text) {
+    function copyToClipboard(text, that) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             // 大部分现代浏览器
             return navigator.clipboard.writeText(text);
@@ -226,7 +226,7 @@
                 return document.execCommand("copy");
             } catch (ex) {
                 console.error("复制到剪贴板失败:", ex);
-                this.$message({
+                that.$message({
                     message: `复制到剪贴板失败`,
                     type: "error",
                 });
@@ -236,7 +236,7 @@
             }
         } else {
             console.error("当前浏览器不支持复制到剪贴板操作");
-            this.$message({
+            that.$message({
                 message: `当前浏览器不支持复制到剪贴板，复制失败`,
                 type: "error",
             });

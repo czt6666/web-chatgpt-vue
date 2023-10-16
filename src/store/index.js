@@ -27,6 +27,8 @@ const state = {
         show_collect_popup: false,
         show_more_options_popup: false,
         show_system_options_popup: false,
+        show_gpt4_notice_popup: false,
+        show_system_describe_popup: false,
     },
     // 0:暗色     1:亮色
     theme: 1,
@@ -101,7 +103,7 @@ const actions = {
         }
     },
     async changeheader(context, val) {
-        let data = { header: val };
+        let data = {header: val};
         let result = await changeheader(data);
         // console.log(result);
         if (result.status === 0) {
@@ -165,6 +167,12 @@ const mutations = {
     CHANG_SYSTEM_OPTIONS_POPUP(state, val) {
         state.show_popup.show_system_options_popup = val;
     },
+    CHANG_GPT4_NOTICE_POPUP(state, val) {
+        state.show_popup.show_gpt4_notice_popup = val;
+    },
+    CHANG_SYSTEM_DESCRIBE_POPUP(state, val) {
+        state.show_popup.show_system_describe_popup = val;
+    },
     CHANG_ALL_POPUP(state, val) {
         for (const key in state.show_popup) {
             state.show_popup[key] = val;
@@ -184,7 +192,7 @@ const mutations = {
         state.init = val;
     },
     SWITCHTHEME(state) {
-        state.theme = !state.theme
+        state.theme = !state.theme;
     }
 };
 

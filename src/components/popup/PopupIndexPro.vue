@@ -1,57 +1,26 @@
 <template>
   <div class="box">
-    <div class="bg" @click.self="closeAllPopup" v-show="show_all_popu">
-      <transition
-          name="animate__animated animate__bounce"
-          enter-active-class="animate__fadeIn"
-          class="custom-transition"
-      >
-        <div class="popup" v-show="show_all_popu">
-          <div class="close" @click="closeAllPopup">
-            <i class="close-icon"></i>
-          </div>
-          <!-- ... -->
-          <!-- <About /> -->
-          <Payment/>
-          <Login/>
-          <CopyToken/>
-          <Collect/>
-          <MoreOption/>
-          <SystemOptions/>
-          <Gpt4Notice/>
-          <SystemDescribe/>
-          <!-- ... -->
+    <div class="bg" @click.self="closeAllPopup"></div>
+    <transition
+        name="animate__animated animate__bounce"
+        enter-active-class="animate__fadeIn"
+        class="custom-transition"
+    >
+      <div class="popup">
+        <div class="close" @click="closeAllPopup">
+          <i class="close-icon"></i>
         </div>
-      </transition>
-    </div>
+      </div>
+      <slot></slot>
+    </transition>
   </div>
 </template>
 
 <script>
-import About from "@/components/popup/About";
-import Payment from "@/components/popup/Payment";
-import Login from "@/components/popup/Login";
-import CopyToken from "@/components/popup/CopyToken";
-import Collect from "@/components/popup/Collect";
-import MoreOption from "@/components/popup/MoreOptions";
-import SystemOptions from "@/components/popup/SystemOptions";
-import Gpt4Notice from "@/components/popup/Gpt4Notice";
-import SystemDescribe from "@/components/popup/SystemDescribe";
 import {mapGetters} from "vuex";
 
 export default {
   name: "PopupIndex",
-  components: {
-    About,
-    Payment,
-    Login,
-    CopyToken,
-    Collect,
-    MoreOption,
-    SystemOptions,
-    Gpt4Notice,
-    SystemDescribe,
-  },
   computed: {
     ...mapGetters(["show_all_popu"]),
   },

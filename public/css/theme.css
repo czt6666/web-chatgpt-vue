@@ -3,7 +3,7 @@
 .light-theme {
   /* common */
   --notice-dot-color: #fd234e;
-  ---link-color: #00abe4;
+  --link-color: #00abe4;
   /* 主题色 */
   --dark-primary-color: #202123;
   --light-primary-color: #ffffff;
@@ -15,6 +15,8 @@
   --welcome-page-option-select-background-color: #c4c4c4;
   --welcome-popup-option-background-color: #e4e4e4;
   --welcome-popup-option-select-background-color: #c4c4c4;
+  --welcome-modle-switch-default-background-color: #19c37d;
+  --welcome-modle-switch-active-background-color: #ab68ff;
 
   /* 对话背景颜色 */
   --icon-color: #555;
@@ -72,7 +74,6 @@
   --popup-config-active-text-color: #2E8B57;
 
   /* icon颜色 */
-  --welcome-page-icon-color: ;
   --faq-icon-color: #888;
   --faq-icon-hover-color: #222;
   --faq-icon-background-color: #eee;
@@ -91,6 +92,8 @@
   --welcome-page-option-select-background-color: #202123;
   --welcome-popup-option-background-color: #2a2b2c;
   --welcome-popup-option-select-background-color: #636465;
+  --welcome-modle-switch-default-background-color: #1e7a58;
+  --welcome-modle-switch-active-background-color: #7348a8;
 
 
   /* 对话背景颜色 */
@@ -149,7 +152,6 @@
   --popup-config-active-text-color: #4eee94;
 
   /* icon颜色 */
-  --welcome-page-icon-color: ;
   --faq-icon-color: var(--text-color);
   --faq-icon-hover-color: #fff;
   --faq-icon-background-color: #40414f;
