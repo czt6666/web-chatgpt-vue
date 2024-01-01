@@ -4,8 +4,17 @@ import "nprogress/nprogress.css";
 import axios from "axios";
 import Vue from "vue";
 
+// 获取baseURL
+let baseURL = process.env.VUE_APP_DEBUG_BASE_API
+const hostname = window.location.hostname.split(':')[0]
+if (hostname === "gptgptgpt.cn") {
+    baseURL = process.env.VUE_APP_GPT_BASE_API
+} else if (hostname === "czt666.cn") {
+    baseURL = process.env.VUE_APP_CZT_BASE_API
+}
+
 const request = axios.create({
-    baseURL: process.env.VUE_APP_BASE_API,
+    baseURL,
     timeout: 120000,
 });
 

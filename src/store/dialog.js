@@ -1,5 +1,5 @@
-import {deltsessionbyid, reqallsessiondetail, deleteunfavoritedsessions, collectionsession,} from "@/api";
-import {Message} from "element-ui";
+import { deltsessionbyid, reqallsessiondetail, deleteunfavoritedsessions, collectionsession, } from "@/api";
+import { Message } from "element-ui";
 import Vue from "vue";
 import stramFetch from "../api/fetch";
 
@@ -45,7 +45,7 @@ const actions = {
             context.commit("NEWSESSION");
         }
         // 在messages中添加用户提问
-        const mess = {role: "user", content: ask};
+        const mess = { role: "user", content: ask };
         const cur_sen_id = context.state.current_session_id;
         const cur_messages = context.state.all_session[cur_sen_id].messages;
         cur_messages.push(mess);
@@ -71,16 +71,16 @@ const actions = {
                     message: `钱包余额${money}，请充值`,
                     type: "warning",
                 });
-                context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
+                context.commit("CHANG_PAYMENT_POPUP", 1, { root: true });
             }
         } else if (result.status === 5) {
-            // 用户余额不足0.2元，限制提问 + 弹窗 + Message
+            // 用户余额不足以使用GPT4，限制提问 + 弹窗 + Message
             const money = result.data.money.toFixed(2);
             Message({
                 message: result.message,
                 type: "warning",
             });
-            context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
+            context.commit("CHANG_PAYMENT_POPUP", 1, { root: true });
             context.commit("FAILASKCHATGPT", `钱包余额不足，无法使用GPT4`);
         } else if (result.status === 6) {
             // 正在更新 限制提问 + Message
@@ -99,8 +99,8 @@ const actions = {
                 message: result.message,
                 type: "warning",
             });
-            context.commit("CHANG_PAYMENT_POPUP", 1, {root: true});
-            context.commit("FAILASKCHATGPT", `钱包余额已欠费${money}元`);
+            context.commit("CHANG_PAYMENT_POPUP", 1, { root: true });
+            context.commit("FAILASKCHATGPT", result.message);
         } else {
             // 7.4 回答失败 错误提示 + 回答框标红
             Message({
@@ -113,17 +113,17 @@ const actions = {
     // 切换当前session ID
     async switchcurrentsessionid(context, session_id) {
         context.commit("SWITCHCURRENTSESSIONID", session_id);
-        context.commit("CHANG_SIDEBAR", 0, {root: true});
+        context.commit("CHANG_SIDEBAR", 0, { root: true });
     },
     // 根据id删除 session
     async deletesession(context, session_id) {
         // 异步 api 请求
-        let data = {session_id};
+        let data = { session_id };
         let result = await deltsessionbyid(data);
         // console.log(result);
         if (result.status === 0) {
             context.commit("DELETESESSION", session_id);
-            context.commit("CHANG_SIDEBAR", 0, {root: true});
+            context.commit("CHANG_SIDEBAR", 0, { root: true });
         }
     },
     // 删除未收藏 session
@@ -144,7 +144,7 @@ const actions = {
         };
         let result = await collectionsession(data);
         if (result.status === 0) {
-            context.commit("COLLECTSESSION", {id: session_id, result: result.data.is_collect});
+            context.commit("COLLECTSESSION", { id: session_id, result: result.data.is_collect });
         }
     },
     togglemodle(context) {
@@ -156,7 +156,7 @@ const actions = {
                 "gpt4_usage_notice_popup_disabled"
             ) === "true";
             if (!disabled) {
-                context.commit("CHANG_GPT4_NOTICE_POPUP", true, {root: true});
+                context.commit("CHANG_GPT4_NOTICE_POPUP", true, { root: true });
             }
         }
     },
@@ -186,7 +186,8 @@ const mutations = {
             if (key === "role") continue;
             state.system_describe[key] = null;
         }
-        // 设置 语气tone
+        // 复原模型
+        state.model = "gpt-3.5-turbo"
         state.current_session_id = undefined;
         this.commit("CHANG_SIDEBAR", 0);
     },

@@ -4,21 +4,7 @@
         <Collect />
         <div class="content">
             <h1 class="name">ChatGPT</h1>
-            <!-- 标题和模型 -->
-            <!-- <Model /> -->
-            <!-- 自动提问 -->
-<!--            <Tips v-show="!show_conf" />-->
-            <!-- 聊天配置 -->
             <ClumeConf />
-            <!-- 切换按钮-->
-<!--            <div-->
-<!--                @click="changeConf"-->
-<!--                class="config-box"-->
-<!--                :style="{ marginLeft: layout_mod ? '0px' : '10px' }"-->
-<!--            >-->
-<!--                <i class="config_icon" v-show="!show_conf"></i>-->
-<!--                <i class="chat_icon" v-show="show_conf"></i>-->
-<!--            </div>-->
         </div>
     </div>
 </template>

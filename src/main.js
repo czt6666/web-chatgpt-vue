@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+import './base/theme.css';
 
 // vuex
 import store from "./store/index";

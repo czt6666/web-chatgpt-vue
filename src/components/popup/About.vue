@@ -1,7 +1,7 @@
 <template>
     <div v-show="1">
         <div class="content">
-            <img class="logo" src="../../assets/img/openai-2x-blue.png" />
+            <img class="logo" :src="logoSrc" alt="Logo" />
             <h2 class="title">ChatGPT聊天</h2>
             <h3 class="versions">{{ $config.VERSION }}</h3>
             <div class="more">
@@ -9,14 +9,11 @@
                     :href="$link.android_app"
                     target="blank"
                     class="item"
-                    download="ChatgptTalk.apk"
+                    download="chatgpt.apk"
                 >
                     获取APP
                 </a>
-                <a
-                    href="https://support.qq.com/products/593071"
-                    target="blank"
-                    class="item"
+                <a :href="$link.recommend" target="blank" class="item"
                     >问题反馈</a
                 >
                 <a :href="$link.helpindex" target="blank" class="item"
@@ -32,10 +29,18 @@
 
     export default {
         name: "About",
+        data() {
+            return {
+                logoSrc: "",
+            };
+        },
         computed: {
             ...mapState({
                 show_about_popup: (state) => state.show_popup.show_about_popup,
             }),
+        },
+        created() {
+            this.logoSrc = require(`../../assets/img/${this.$config.logo_name}`);
         },
     };
 </script>

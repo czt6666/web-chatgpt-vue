@@ -5,8 +5,19 @@
     <script>
         var _hmt = _hmt || [];
         (function () {
+            // 根据不同的域名设置不同的 id
+            var currentDomain = window.location.hostname;
+            var trackingId;
+            switch (currentDomain) {
+                case 'czt666.cn':
+                    trackingId = '4ec12f3de7ba27a3cd878fac972b3acf';
+                    break;
+                case 'gptgptgpt.cn':
+                    trackingId = '0ff7c086e53d2f73ec918267ccd1c73f';
+                    break;
+            }
             var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?4ec12f3de7ba27a3cd878fac972b3acf";
+            hm.src = `https://hm.baidu.com/hm.js?${trackingId}`;
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
@@ -15,16 +26,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <meta name="keywords" content="ChatGPT,ChatGPT官网,ChatGPT中文官网入口,ChatGPT入口,ChatGPT注册">
-    <meta name="description" content="在线快速体验ChatGTP入口，无需繁杂操作，教您国内快速注册登录使用ChatGTP智能AI机器人！">
-    <meta name="author" content="czt666">
+    <meta name="keywords" content="chatgpt,国内chatgpt,免费chatgpt">
+    <meta name="description" content="国内免费体验chatgpt，不用注册就可以使用chatgpt">
+    <meta name="author" content="czt">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#202123" />
     <link rel="manifest" href="manifest.json">
-    <!--  <title>-->
-    <!--    <%= htmlWebpackPlugin.options.title %>-->
-    <!--  </title>-->
-    <title>ChatGPT聊天</title>
+    <title>国内ChatGPT——点开即用</title>
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/theme.css">
 </head>

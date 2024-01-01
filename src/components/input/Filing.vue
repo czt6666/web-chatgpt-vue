@@ -9,7 +9,7 @@
             class="link"
             target="blank"
             v-show="!layout_mod && !init.is_free"
-            >京ICP备2022004581号-1</a
+            >{{ icp_text }}</a
         >
     </div>
 </template>
@@ -20,7 +20,9 @@
     export default {
         name: "Filing",
         data() {
-            return {};
+            return {
+                icp_text: this.$config.icp,
+            };
         },
         computed: {
             ...mapState(["layout_mod", "init"]),

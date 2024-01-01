@@ -15,8 +15,15 @@ function stramFetch(question, context) {
             headers.Authorization = token;
         }
 
-        const baseURL = process.env.VUE_APP_BASE_API;
-        // fetch("https://czt666.cn:5055/api/stream/askchatgpt", {
+        // 获取 BaseUrl
+        let baseURL = process.env.VUE_APP_DEBUG_BASE_API
+        const hostname = window.location.hostname.split(':')[0]
+        if (hostname === "gptgptgpt.cn") {
+            baseURL = process.env.VUE_APP_GPT_BASE_API
+        } else if (hostname === "czt666.cn") {
+            baseURL = process.env.VUE_APP_CZT_BASE_API
+        }
+
         fetch(baseURL + "/api/stream/askchatgpt", {
             method: "POST",
             headers,

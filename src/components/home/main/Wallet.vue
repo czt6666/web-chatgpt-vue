@@ -2,14 +2,11 @@
     <div class="infomation">
         <h2 class="info-title">钱包信息</h2>
         <ul>
-            <li class="info-item">
+            <li class="info-item" v-if="display_config.show_wallet">
                 <h3 class="subtitle">余额</h3>
                 {{ user_wallet }}
-                <!-- <span class="info-tips">
-            充值需要人工服务，请确保钱包余额充足，以免影响使用！
-        </span> -->
             </li>
-            <li class="info-item">
+            <li class="info-item" v-if="display_config.show_member">
                 <h3 class="subtitle">会员</h3>
                 {{ user_member }}
             </li>
@@ -26,7 +23,7 @@
                     $link.payment_dcwj
                 }}</a>
             </li>
-            <li class="info-item">
+            <li class="info-item" v-if="display_config.show_free_quota">
                 <h3 class="subtitle">免费获取额度</h3>
                 <p>进行【问题反馈】获取5元额度！</p>
                 <p>
@@ -36,12 +33,6 @@
                 </p>
                 <p class="info-tips">免费额度24小时内到账</p>
             </li>
-            <!--      <li class="info-item">-->
-            <!--        <h3 class="subtitle">活动</h3>-->
-            <!--        <ol class="info-ol">-->
-            <!--          <li>为网站提出建议免费获取5元额度</li>-->
-            <!--        </ol>-->
-            <!--      </li>-->
         </ul>
         <SwitchPage :info="context" />
     </div>
@@ -74,6 +65,9 @@
                 user_all_info: (state) => state.moduleUserinfo.user_all_info,
             }),
             ...mapGetters("moduleUserinfo", ["user_wallet", "user_member"]),
+            display_config() {
+                return this.$config.wallet;
+            },
         },
     };
 </script>

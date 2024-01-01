@@ -3,7 +3,8 @@
 .light-theme {
   /* common */
   --notice-dot-color: #fd234e;
-  --link-color: #00abe4;
+  --link-color: #3ba7ef;
+
   /* 主题色 */
   --dark-primary-color: #202123;
   --light-primary-color: #ffffff;
@@ -49,6 +50,7 @@
 
   /* 文字颜色 */
   --text-color: #333;
+  --text-placeholder-color: #757575;
   --border-color: #ccc;
   --homepage-subtitle-color: #999;
   --homepage-notice-color: #f6ad55;
@@ -127,6 +129,7 @@
 
   /* 文字颜色 */
   --text-color: #d9d9e3;
+  --text-placeholder-color: #a3a3a0;
   --border-color: var(--text-color);
   --homepage-subtitle-color: #999;
   --homepage-notice-color: #f6ad55;

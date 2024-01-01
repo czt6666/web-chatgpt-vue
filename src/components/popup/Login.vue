@@ -3,7 +3,7 @@
         <div class="cont">
             <h2 class="title">登录账号</h2>
             <ul class="switch">
-                <h3>切换登录方式：</h3>
+                <h3>登录方式</h3>
                 <li
                     v-for="(item, index) of input_ways"
                     :key="index"

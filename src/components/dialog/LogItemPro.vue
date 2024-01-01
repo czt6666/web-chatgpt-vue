@@ -211,36 +211,37 @@
     function copyToClipboard(text, that) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             // 大部分现代浏览器
-            return navigator.clipboard.writeText(text);
-        } else if (
-            document.queryCommandSupported &&
-            document.queryCommandSupported("copy")
-        ) {
-            // 兼容旧版浏览器
-            const textarea = document.createElement("textarea");
-            textarea.textContent = text;
-            textarea.style.position = "fixed";
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                return document.execCommand("copy");
-            } catch (ex) {
-                console.error("复制到剪贴板失败:", ex);
-                that.$message({
-                    message: `复制到剪贴板失败`,
-                    type: "error",
+            return navigator.clipboard
+                .writeText(text)
+                .then(() => {
+                    return;
+                })
+                .catch(() => {
+                    return fallbackCopyToClipboard(text);
                 });
-                return false;
-            } finally {
-                document.body.removeChild(textarea);
-            }
         } else {
+            return fallbackCopyToClipboard(text);
+        }
+    }
+
+    // 兼容旧版浏览器
+    function fallbackCopyToClipboard(text) {
+        const textarea = document.createElement("textarea");
+        textarea.textContent = text;
+        textarea.style.position = "fixed";
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            return document.execCommand("copy");
+        } catch (ex) {
             console.error("当前浏览器不支持复制到剪贴板操作");
             that.$message({
                 message: `当前浏览器不支持复制到剪贴板，复制失败`,
                 type: "error",
             });
             return false;
+        } finally {
+            document.body.removeChild(textarea);
         }
     }
 </script>
@@ -453,6 +454,12 @@
         background-color: #282c34;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         padding-top: calc(32px) !important;
+    }
+
+    pre code {
+        display: block;
+        overflow-x: auto;
+        padding: 1em;
     }
 
     pre code:before {

@@ -19,7 +19,11 @@
                 mystyle: 'marginBottom: 0px',
             }"
         >
-            <img src="@/assets/svg/option.png" v-show="!can_select_style" />
+            <img
+                src="@/assets/svg/option.png"
+                v-show="!can_select_style"
+                alt="Options"
+            />
         </dialogItem>
         <!--        &lt;!&ndash;更多选项 开始按钮&ndash;&gt;-->
         <!--        <div-->
@@ -113,7 +117,7 @@
                 // 关闭侧边栏
                 this.$store.commit("CHANG_SIDEBAR", 0);
             },
-          showOptionPopup() {
+            showOptionPopup() {
                 // 弹出 MORE_OPTIONS 弹窗
                 this.$store.commit("CHANG_MORE_OPTIONS_POPUP", true);
                 // 关闭侧边栏

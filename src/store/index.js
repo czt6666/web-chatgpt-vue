@@ -7,7 +7,8 @@ import moduleUserinfo from "./userinfo";
 import modulePayment from "./payment";
 import router from "@/router";
 import {
-    askchatgpt, changeheader, requserheader, reqhitsindex, reqhitscourse, reqhitsmianze, reqinitconfig
+    askchatgpt, changeheader, requserheader, reqhitsindex, reqhitscourse,
+    reqhitsmianze, reqinitconfig, noticeviewedbyuser,
 } from "@/api";
 
 Vue.use(Vuex);
@@ -29,6 +30,7 @@ const state = {
         show_system_options_popup: false,
         show_gpt4_notice_popup: false,
         show_system_describe_popup: false,
+        show_notice_popup: false,
     },
     // 0:暗色     1:亮色
     theme: 1,
@@ -59,6 +61,13 @@ const state = {
         ],
         current_goods_id: "y2000",
         welcome_tips: null,
+        notice: {
+            should_show: false,
+            title: "通知",
+            name: "",
+            content: [""],
+            data: "",
+        }
     },
     // 记录 屏幕宽高
     client_width: 0,
@@ -103,25 +112,28 @@ const actions = {
         }
     },
     async changeheader(context, val) {
-        let data = {header: val};
+        let data = { header: val };
         let result = await changeheader(data);
         // console.log(result);
         if (result.status === 0) {
             context.commit("CHANGE_USERHEADER", result.data);
         }
     },
-    // async requserheader(context) {
-    //     let result = await requserheader();
-    //     // console.log(result);
-    //     if (result.status === 0) {
-    //         context.commit("CHANGE_USERHEADER", result.data);
-    //     }
-    // },
     async reqinitconfig(context) {
         let result = await reqinitconfig();
         // console.log(result);
         if (result.status === 0) {
             context.commit("CHANGE_INITCONFIG", result.data);
+        }
+    },
+    async noticeviewedbyuser(context, val) {
+        let data = { notice_tag: val };
+        console.log(data);
+        let result = await noticeviewedbyuser(data);
+        console.log(result);
+        context.commit("CHANG_NOTICE_POPUP", false);
+        if (result.status === 0) {
+            console.log("success");
         }
     },
     // 增加阅读量
@@ -173,6 +185,9 @@ const mutations = {
     CHANG_SYSTEM_DESCRIBE_POPUP(state, val) {
         state.show_popup.show_system_describe_popup = val;
     },
+    CHANG_NOTICE_POPUP(state, val) {
+        state.show_popup.show_notice_popup = val;
+    },
     CHANG_ALL_POPUP(state, val) {
         for (const key in state.show_popup) {
             state.show_popup[key] = val;
@@ -188,7 +203,10 @@ const mutations = {
             sessionStorage.setItem("isReload", true);
             location.reload(true); // 刷新
         }
-        // console.log(val);
+        // 有通知，显示弹窗
+        if (val.notice && val.notice.should_show) {
+            state.show_popup.show_notice_popup = true;
+        }
         state.init = val;
     },
     SWITCHTHEME(state) {
@@ -201,6 +219,9 @@ const getters = {
     show_all_popu(state) {
         const allValues = Object.values(state.show_popup);
         return allValues.reduce((acc, cur) => acc || cur, false); // true
+    },
+    nitice_info(state) {
+        return state.init.notice
     },
 };
 

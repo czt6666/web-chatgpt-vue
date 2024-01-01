@@ -40,6 +40,13 @@ export const reqinitconfig = () =>
         method: "get",
         responseType: "json",
     });
+export const noticeviewedbyuser = (data) =>
+    request({
+        url: "/api/init/noticeviewedbyuser",
+        method: "post",
+        responseType: "json",
+        data: qs.stringify(data),
+    });
 
 
 // 会话模块

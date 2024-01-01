@@ -21,7 +21,6 @@
                         @keydown.enter="askchatgpt"
                         @input="textareaHeight"
                         rows="1"
-                        maxlength="2500"
                     ></textarea>
                 </div>
                 <div class="send-box">

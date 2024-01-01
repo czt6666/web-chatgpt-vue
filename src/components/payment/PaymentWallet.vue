@@ -64,10 +64,9 @@
 
     .paymentbox {
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 10px;
         margin-top: 10px;
     }
 </style>

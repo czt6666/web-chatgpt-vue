@@ -11,10 +11,6 @@
                 <a class="link" :href="$link.account">{{ $link.account }}</a>
             </li>
             <li class="info-item">
-                <h3 class="subtitle">收费问题</h3>
-                <a class="link" :href="$link.charge">{{ $link.charge }}</a>
-            </li>
-            <li class="info-item">
                 <h3 class="subtitle">更多产品</h3>
                 <a class="link" :href="$link.product">{{ $link.product }}</a>
             </li>
