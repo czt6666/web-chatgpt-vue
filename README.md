@@ -1,4 +1,4 @@
-# lyq
+# web-chatgpt-vue
 
 ## Project setup
 ```

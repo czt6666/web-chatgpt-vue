@@ -1,5 +1,5 @@
 // 配置信息
-const VERSION = "3.6.1"
+const VERSION = "3.6.2"
 // 获取当前前端域名
 let domain = null
 if (process.env.NODE_ENV === 'development') {
