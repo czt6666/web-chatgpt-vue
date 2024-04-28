@@ -46,7 +46,8 @@
   --sidebar-current-hover-color: #3a3b3f;
   --sidebar-text-color: #fff;
   --sidebar-icon-color: #fff;
-
+  --sidebar-close-color: #cdcdcd;
+  --sidebar-close-active-color: #090909;
 
   /* 文字颜色 */
   --text-color: #333;
@@ -125,6 +126,8 @@
   --sidebar-current-hover-color: #3a3b3f;
   --sidebar-text-color: #fff;
   --sidebar-icon-color: #fff;
+  --sidebar-close-color: #9b9b9b;
+  --sidebar-close-active-color: #ececec;
 
 
   /* 文字颜色 */

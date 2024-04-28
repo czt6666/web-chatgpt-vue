@@ -132,10 +132,10 @@
                 this.$bus.$emit("newChat");
             },
             modifyFavorites(session_id) {
-                this.$store.dispatch(
-                    "moduleDialog/collectionsession",
-                    session_id
-                );
+                // this.$store.dispatch(
+                //     "moduleDialog/collectionsession",
+                //     session_id
+                // );
             },
         },
         computed: {

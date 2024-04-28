@@ -4,23 +4,13 @@
             <vue-scroll :ops="ops">
                 <div class="option-cont">
                     <h2 class="title"></h2>
-                    <div
-                        class="option-box"
-                        v-for="(item, index) of options"
-                        :key="index"
-                    >
+                    <div class="option-box" v-for="(item, index) of options" :key="index">
                         <h3 class="option-title">{{ index }}</h3>
                         <ul class="grid option-ul">
                             <li
                                 v-for="(content, idx) of item"
                                 :key="idx"
-                                :class="
-                                    [length, tool, tone, random_tone].includes(
-                                        content.value
-                                    )
-                                        ? 'cont-current'
-                                        : ''
-                                "
+                                :class="[length, tool, tone, random_tone].includes(content.value) ? 'cont-current' : ''"
                                 @click="changeOption(content)"
                             >
                                 {{ content.value }}
@@ -46,11 +36,11 @@
                 options: {
                     "⚙️ 选择情景应用": [
                         { value: "文生图", type: "tool" },
-                        { value: "变量命名", type: "tool" },
-                        { value: "函数命名", type: "tool" },
-                        { value: "马克思哲学家", type: "tool" },
                         { value: "激励教练", type: "tool" },
                         { value: "花哨的标题生成器", type: "tool" },
+                        { value: "短横线命名法", type: "tool" },
+                        { value: "下划线命名", type: "tool" },
+                        { value: "小驼峰命名", type: "tool" },
                     ],
                     "🎯 调整回答长度": [
                         { value: "最简回答", type: "length" },
@@ -78,13 +68,11 @@
         },
         computed: {
             ...mapState({
-                show_system_options_popup: (state) =>
-                    state.show_popup.show_system_options_popup,
+                show_system_options_popup: (state) => state.show_popup.show_system_options_popup,
                 length: (state) => state.moduleDialog.system_describe.length,
                 tone: (state) => state.moduleDialog.system_describe.tone,
                 tool: (state) => state.moduleDialog.system_describe.tool,
-                random_tone: (state) =>
-                    state.moduleDialog.system_describe.random_tone,
+                random_tone: (state) => state.moduleDialog.system_describe.random_tone,
             }),
         },
         methods: {

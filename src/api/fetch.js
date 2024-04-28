@@ -15,7 +15,7 @@ function stramFetch(question, context) {
             headers.Authorization = token;
         }
 
-        // 获取 BaseUrl
+        // 获取 BaseUrl 
         let baseURL = process.env.VUE_APP_DEBUG_BASE_API
         const hostname = window.location.hostname.split(':')[0]
         if (hostname === "gptgptgpt.cn") {

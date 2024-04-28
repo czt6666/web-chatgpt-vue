@@ -1,14 +1,8 @@
 <template>
     <div>
-        <div
-            class="content"
-            :style="{ flexDirection: layout_mod ? 'column' : 'row' }"
-        >
+        <div class="content" :style="{ flexDirection: layout_mod ? 'column' : 'row' }">
             <!--直接提问-->
-            <ul
-                class="clume"
-                :style="{ marginLeft: layout_mod ? '0px' : '10px' }"
-            >
+            <ul class="clume" :style="{ marginLeft: layout_mod ? '0px' : '10px' }">
                 <!-- 头部 icon图标 -->
                 <li class="inc">
                     <img :src="system_conf.ask.icon" class="icon" alt="icon" />
@@ -26,10 +20,7 @@
             </ul>
 
             <!--实用预设-->
-            <ul
-                class="clume"
-                :style="{ marginLeft: layout_mod ? '0px' : '10px' }"
-            >
+            <ul class="clume" :style="{ marginLeft: layout_mod ? '0px' : '10px' }">
                 <!-- 头部 icon图标 -->
                 <li class="inc">
                     <img :src="system_conf.tool.icon" class="icon" alt="icon" />
@@ -40,11 +31,7 @@
                     class="cont"
                     v-for="(content, idx) of system_conf.tool.content"
                     :key="idx"
-                    :class="
-                        [length, tool, tone].includes(content.value)
-                            ? 'cont-current'
-                            : ''
-                    "
+                    :class="[length, tool, tone].includes(content.value) ? 'cont-current' : ''"
                     @click="changeOption(content)"
                 >
                     <div v-if="content.type !== 'switch_modle'">
@@ -54,10 +41,7 @@
                 </li>
             </ul>
             <!--自定义系统-->
-            <ul
-                class="clume"
-                :style="{ marginLeft: layout_mod ? '0px' : '10px' }"
-            >
+            <ul class="clume" :style="{ marginLeft: layout_mod ? '0px' : '10px' }">
                 <!-- 头部 icon图标 -->
                 <li class="inc">
                     <img :src="system_conf.role.icon" class="icon" alt="icon" />
@@ -93,7 +77,7 @@
                     ask: {
                         icon: "https://czt666.cn/gpt/img/ask.png",
                         title: "直接提问",
-                        content: ["你好", "你是谁", "写一份简历"],
+                        content: ["你好", "你是谁", "如何改善拖延症"],
                     },
                     tool: {
                         icon: "https://czt666.cn/gpt/img/tool.png",
