@@ -3,7 +3,7 @@
         <div class="content">
             <h2 class="title">GPT4使用需知</h2>
             <ul class="notice-list">
-                <li>GPT4模型仅支持钱包支付，会员期间使用GPT4将从钱包余额扣除。</li>
+                <li>GPT4为付费模型</li>
                 <li>
                     GPT4的使用费用较高，请谨慎使用，具体收费详情如下。
                     <img src="../../assets/img/charge-gpt4.jpg" alt="模型收费表" class="chargelist" />
@@ -51,6 +51,7 @@
         font-size: 20px;
         font-weight: 700;
         text-align: center;
+        margin-bottom: 10px;
     }
 
     ul.notice-list li {
@@ -75,6 +76,7 @@
     .notshow {
         display: block;
         text-align: center;
+        color: var(--text-placeholder-color);
         margin-bottom: -10px;
     }
 </style>

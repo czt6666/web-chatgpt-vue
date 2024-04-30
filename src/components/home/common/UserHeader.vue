@@ -1,8 +1,7 @@
 <template>
     <div>
         <div class="head-box">
-            <!--        <div class="change-header"></div>-->
-            <img :src="url" alt="" class="header-img" />
+            <img :src="userImage" alt="" class="header-img" />
         </div>
     </div>
 </template>
@@ -11,6 +10,11 @@
     export default {
         name: "Header",
         props: ["url"],
+        computed: {
+            userImage() {
+                return this.url.replace(/(user\d+_2)\.jpg$/, "$1-image.jpg");
+            },
+        },
     };
 </script>
 

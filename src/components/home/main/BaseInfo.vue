@@ -3,7 +3,7 @@
         <h2 class="info-title">个人信息</h2>
         <ul>
             <li class="info-item">
-                <h3 class="subtitle">头像</h3>
+                <h3 class="subtitle">形象</h3>
                 <UserHeader :url="user_all_info.head" />
                 <span class="tips">首页点击头像可进行更改</span>
             </li>
@@ -25,9 +25,7 @@
                 </div>
             </li>
             <li class="info-item">
-                <h3 class="subtitle" :class="check_user_bind ? 'notice' : ''">
-                    手机号
-                </h3>
+                <h3 class="subtitle" :class="check_user_bind ? 'notice' : ''">手机号</h3>
                 <div class="short-input">
                     <FlexableInput
                         :info="{
@@ -40,9 +38,7 @@
                 </div>
             </li>
             <li class="info-item">
-                <h3 class="subtitle" :class="check_user_bind ? 'notice' : ''">
-                    邮箱
-                </h3>
+                <h3 class="subtitle" :class="check_user_bind ? 'notice' : ''">邮箱</h3>
                 <div class="short-input">
                     <FlexableInput
                         :info="{
@@ -112,10 +108,7 @@
             ...mapState({
                 user_all_info: (state) => state.moduleUserinfo.user_all_info,
             }),
-            ...mapGetters("moduleUserinfo", [
-                "user_creat_account_date",
-                "check_user_bind",
-            ]),
+            ...mapGetters("moduleUserinfo", ["user_creat_account_date", "check_user_bind"]),
         },
         // created() {
         //   this.$bus.$on("focusFlexInput", (data)=>{
@@ -157,7 +150,6 @@
         border-radius: 10px;
         background-color: var(--notice-dot-color);
         z-index: 10;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2),
-            inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2), inset 0px 2px 4px rgba(0, 0, 0, 0.1);
     }
 </style>

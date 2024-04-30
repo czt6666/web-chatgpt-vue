@@ -50,8 +50,8 @@ const cztDisplayConfig = {
     // 钱包页面配置
     wallet: {
         show_wallet: true,
-        show_member: true,
-        show_free_quota: true,
+        show_member: false,
+        show_free_quota: false,
     },
     // 首页配置
     index: {

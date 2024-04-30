@@ -40,7 +40,7 @@
     .content {
         display: flex;
         flex-direction: column;
-        width: 96%;
+        width: 94%;
         max-width: 800px;
         margin: 0 auto;
         padding: 30px 0 50px;

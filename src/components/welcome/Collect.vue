@@ -1,7 +1,7 @@
 <template>
     <div class="box">
         <div class="collect" v-show="is_newuser && show_collect">
-            ⚠️ 为防止丢失，请收藏本网站
+            <span class="tip">⚠️ 为防止丢失，请收藏本网站 </span>
             <span class="hidden" @click="hideCollect">不再显示</span>
         </div>
     </div>
@@ -35,24 +35,35 @@
 <style scoped>
     .collect {
         position: relative;
+        display: flex;
+        flex-wrap: nowrap;
         width: 100%;
         height: 40px;
         line-height: 40px;
-        text-align: center;
+        font-size: 16px;
         background-color: var(--welcome-page-collect-background-color);
     }
-
-    .hidden {
+    .tip {
         display: block;
+        width: 100%;
+        white-space: nowrap;
+        text-align: center;
+    }
+    .hidden {
         position: absolute;
         top: 0;
         right: 0;
-        height: 40px;
-        line-height: 40px;
-        margin-right: 30px;
-        font-size: 16px;
+        display: block;
         text-decoration: underline;
+        white-space: nowrap;
+        margin-right: 10px;
+        margin-left: 10px;
         cursor: pointer;
         color: var(---link-color);
+    }
+    @media screen and (max-width: 400px) {
+        .hidden {
+            position: unset;
+        }
     }
 </style>

@@ -16,7 +16,7 @@ const state = {
         is_vip: false,
         is_member: false,
         wallet: "0.00",
-        head: "https://czt666.cn/gpt/img/user1.jpg",
+        head: "https://czt666.cn/gpt/img/user2_2.jpg",
     },
 };
 

@@ -4,11 +4,7 @@
             <div></div>
             <div class="middle">
                 <h2 class="model-title">{{ display_model }}</h2>
-                <span
-                    class="system"
-                    @click="showSystemDescribe"
-                    v-show="curr_session_system"
-                ></span>
+                <span class="system" @click="showSystemDescribe" v-show="curr_session_system"></span>
             </div>
             <Collection />
         </div>
@@ -23,10 +19,7 @@
         name: "TopModleInfo",
         components: { Collection },
         computed: {
-            ...mapGetters("moduleDialog", [
-                "curr_session_model",
-                "curr_session_system",
-            ]),
+            ...mapGetters("moduleDialog", ["curr_session_model", "curr_session_system"]),
             display_model() {
                 if (this.curr_session_model === "gpt-3.5-turbo") {
                     return "GPT-3.5";
@@ -54,7 +47,7 @@
         height: 52px;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid var(--chat-ask-border-color);
     }
 
     .middle {

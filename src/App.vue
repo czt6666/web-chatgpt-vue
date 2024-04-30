@@ -7,17 +7,13 @@
 
 <script>
     import popupIndex from "@/components/popup/PopupIndex";
-    import { mapState } from "vuex";
+    import { mapGetters, mapState } from "vuex";
 
     export default {
         name: "App",
         components: { popupIndex },
         computed: {
-            themeColor() {
-                if (this.theme) return "light-theme";
-                return "dark-theme";
-            },
-            ...mapState(["theme"]),
+            ...mapGetters(["themeColor"]),
         },
         mounted() {},
         created() {
@@ -39,8 +35,7 @@
             const link = document.createElement("link");
             link.rel = "icon";
             link.href = this.$config.rel_icon_href;
-            const head =
-                document.head || document.getElementsByTagName("head")[0];
+            const head = document.head || document.getElementsByTagName("head")[0];
             // 清除之前的 favicon
             const existingFavicons = head.querySelector('link[rel="icon"]');
             head.removeChild(existingFavicons);
@@ -52,8 +47,7 @@
 
 <style>
     #app {
-        font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
-            sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
         font-size: 16px;
         color: var(--text-color);
         line-height: 1.75;
@@ -63,8 +57,7 @@
     @font-face {
         font-family: "icomoon";
         src: url("./components/fonts/icomoon.eot?kikvbn");
-        src: url("./components/fonts/icomoon.eot?kikvbn#iefix")
-                format("embedded-opentype"),
+        src: url("./components/fonts/icomoon.eot?kikvbn#iefix") format("embedded-opentype"),
             url("./components/fonts/icomoon.ttf?kikvbn") format("truetype"),
             url("./components/fonts/icomoon.woff?kikvbn") format("woff"),
             url("./components/fonts/icomoon.svg?kikvbn#icomoon") format("svg");

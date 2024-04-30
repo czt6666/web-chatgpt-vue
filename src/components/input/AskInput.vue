@@ -15,6 +15,7 @@
                         v-model="ask"
                         ref="textarea"
                         id="textarea"
+                        placeholder="给ChatGPT发送消息..."
                         label=""
                         autofocus="autofocus"
                         @keydown.alt.enter="addNewLine"
@@ -25,11 +26,7 @@
                 </div>
                 <div class="send-box">
                     <span class="submit" @click="askchatgpt">
-                        <span
-                            class="send"
-                            :class="is_free ? 'free' : ''"
-                            v-show="!is_ansing"
-                        ></span>
+                        <span class="send" :class="is_free ? 'free' : ''" v-show="!is_ansing"></span>
                         <div class="loading la-sm la-dark" v-show="is_ansing">
                             <div></div>
                             <div></div>
@@ -105,8 +102,7 @@
                 const textarea = this.$refs.textarea;
                 const btm_content = this.$refs.btm_content;
                 textarea.style.height = "auto";
-                const height =
-                    textarea.scrollHeight > 140 ? 140 : textarea.scrollHeight;
+                const height = textarea.scrollHeight > 140 ? 140 : textarea.scrollHeight;
                 textarea.style.height = height + "px";
                 btm_content.style.height = height + "px";
             },
@@ -160,12 +156,10 @@
         bottom: 0;
         width: 100%;
         height: 100%;
-        border-radius: 7px;
+        border-radius: 12px;
         border: 1px solid var(--question-box-border-color);
-
         background-color: var(--question-box-background-color);
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-            rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     }
 
     .hidden {
@@ -195,11 +189,17 @@
         width: 100%;
         height: 50px;
         max-height: 140px;
-        padding: 13px 12px 14px;
-        line-height: 1.72em;
+        padding: 13px 20px 14px;
+        line-height: 1.65em;
+        font-family: Verdana;
+        font-size: 14px;
         resize: none;
         color: var(--text-color);
         background-color: transparent;
+    }
+
+    .input::placeholder {
+        color: var(--text-placeholder-color);
     }
 
     .send-box {
@@ -222,6 +222,9 @@
     }
 
     .send {
+        /* width: 50px; */
+        /* height: 100%; */
+        /* text-align: center; */
         position: absolute;
     }
 

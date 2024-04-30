@@ -17,7 +17,7 @@
                         <h4 class="switch-theme">切换主题</h4>
                         <div class="action elm-ui">
                             <el-switch
-                                v-model="value1"
+                                v-model="theme"
                                 active-text="亮色"
                                 inactive-text="暗色"
                                 active-color="#4EEE94"
@@ -38,10 +38,7 @@
                             </div>
                             <!-- 确认删除、取消删除 -->
                             <div v-show="can_clear">
-                                <button
-                                    class="btn clear"
-                                    @click="clearAllSession"
-                                >
+                                <button class="btn clear" @click="clearAllSession">
                                     {{ clear_title[1] }}
                                 </button>
                                 <button class="btn cancle" @click="switchClear">
@@ -68,7 +65,6 @@
         components: { About },
         data() {
             return {
-                value1: true,
                 side_bar: ["基础设置", "关于我们"],
                 active_bar: "基础设置",
                 can_clear: false,
@@ -77,10 +73,10 @@
         },
         computed: {
             ...mapState({
-                show_more_options_popup: (state) =>
-                    state.show_popup.show_more_options_popup,
+                show_more_options_popup: (state) => state.show_popup.show_more_options_popup,
                 layout_mod: (state) => state.layout_mod,
             }),
+            ...mapState(["theme"]),
         },
         methods: {
             switchTheme() {
@@ -103,6 +99,7 @@
 <style scoped>
     .content {
         display: flex;
+        flex-direction: row;
         width: 100%;
         height: 280px;
         padding: 0 40px;
@@ -111,12 +108,20 @@
 
     .m.content {
         padding: 0 5px;
+        flex-direction: column;
     }
 
     .side-bar {
+        display: flex;
+        flex-direction: column;
         flex: 2;
         height: 100%;
         margin-right: 20px;
+    }
+
+    .m .side-bar {
+        flex-direction: row;
+        flex: 1;
     }
 
     .side-bar > li {

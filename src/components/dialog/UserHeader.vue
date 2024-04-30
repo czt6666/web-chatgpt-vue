@@ -1,8 +1,5 @@
 <template>
-    <div
-        class="userheader"
-        :class="[is_user ? 'user' : 'robot', layout_mod ? 'mobile' : 'pc']"
-    >
+    <div class="userheader" :class="[is_user ? 'user' : 'robot', layout_mod ? 'mobile' : 'pc']">
         <div
             class="header curr-header"
             @click="switchOption()"
@@ -35,12 +32,12 @@
         data() {
             return {
                 headers: [
-                    "https://czt666.cn/gpt/img/user1.jpg",
-                    "https://czt666.cn/gpt/img/user2.jpg",
-                    "https://czt666.cn/gpt/img/user3.jpg",
-                    "https://czt666.cn/gpt/img/user4.jpg",
+                    "https://czt666.cn/gpt/img/user1_2.jpg",
+                    "https://czt666.cn/gpt/img/user2_2.jpg",
+                    "https://czt666.cn/gpt/img/user3_2.jpg",
+                    "https://czt666.cn/gpt/img/user4_2.jpg",
                 ],
-                openaiheader: "https://czt666.cn/gpt/img/openai.png",
+                openaiheader: "https://czt666.cn/gpt/img/openai-blue-header.jpg",
                 show_option: 0,
             };
         },
@@ -97,14 +94,14 @@
         display: block;
         width: 40px;
         height: 40px;
-        border-radius: 2px;
+        border-radius: 999px;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         cursor: pointer;
     }
 
     .robot .curr-header {
         margin-right: 20px;
-        background: url("../../assets/img/openai.png") no-repeat;
+        background: url("../../assets/img/openai-blue.jpg") no-repeat;
         background-size: cover;
     }
 

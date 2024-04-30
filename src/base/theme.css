@@ -31,7 +31,7 @@
 
   /* 提问框颜色 */
   --question-box-background-color: #ffffff;
-  --question-box-border-color: #aaa;
+  --question-box-border-color: #919293;
   --send-button-color: #069bff;
   --icp-link-color: rgba(40, 44, 52, 0.75);
   --tw-ring-offset-shadow: 0 0 transparent;
@@ -91,7 +91,7 @@
   /* 欢迎页颜色 */
   --welcome-page-option-background-color: #3e3f4b;
   --welcome-page-option-hover-background-color: #29292c;
-  --welcome-page-collect-background-color: #696969;
+  --welcome-page-collect-background-color: #997a56;
   --welcome-page-option-select-background-color: #202123;
   --welcome-popup-option-background-color: #2a2b2c;
   --welcome-popup-option-select-background-color: #636465;
@@ -112,7 +112,7 @@
   /* 提问框颜色 */
   --question-box-background-color: #40414f;
   --question-box-border-color: #30313f;
-  --send-button-color: #069bff;
+  --send-button-color: #63B8FF;
   --icp-link-color: rgba(227, 227, 227, 0.75);
   --tw-ring-offset-shadow: 0 0 transparent;
   --tw-ring-shadow: 0 0 transparent;
@@ -129,14 +129,13 @@
   --sidebar-close-color: #9b9b9b;
   --sidebar-close-active-color: #ececec;
 
-
   /* 文字颜色 */
   --text-color: #d9d9e3;
   --text-placeholder-color: #a3a3a0;
   --border-color: var(--text-color);
   --homepage-subtitle-color: #999;
   --homepage-notice-color: #f6ad55;
-  --homepage-link-color: #00abe4;
+  --homepage-link-color: #4F94CD;
 
   /* 单行输入框颜色 */
   --input-box-border-color: #d9d9e3;

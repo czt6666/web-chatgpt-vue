@@ -54,7 +54,7 @@
         flex-wrap: wrap;
         width: 10px;
         height: 60px;
-        z-index: 100;
+        z-index: 80;
         cursor: pointer;
     }
     .close div {
@@ -66,8 +66,7 @@
         border-radius: 4px;
         transition: transform 0.2s ease-in-out;
     }
-    .close:hover div,
-    .collapse .close div {
+    .close:hover div {
         background-color: var(--sidebar-close-active-color);
     }
     .close .top {

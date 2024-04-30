@@ -79,10 +79,10 @@
         z-index: 20;
     }
     .active .gpt3 {
-        color: #666;
+        color: var(--text-placeholder-color);
     }
     .unactive .gpt4 {
-        color: #666;
+        color: var(--text-placeholder-color);
     }
     .active .switch-btn {
         transform: translateX(100%);

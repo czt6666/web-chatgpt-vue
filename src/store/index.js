@@ -32,8 +32,8 @@ const state = {
         show_system_describe_popup: false,
         show_notice_popup: false,
     },
-    // 0:暗色     1:亮色
-    theme: 1,
+    // false:暗色     true:亮色
+    theme: true,
     // 网页初始化信息
     init: {
         is_free: false,
@@ -91,17 +91,6 @@ const actions = {
             }
         }
     },
-    // adapt(context, screenWidth) {
-    //     if (screenWidth < 768 && !router.currentRoute.path.startsWith("/m")) {
-    //         // 如果屏幕宽度小于 768，并且当前路由路径没有以 /m 开头 则在路径前面加上 /m
-    //         router.replace(`/m${router.currentRoute.path}`);
-    //         context.commit("ADAPT", 1);
-    //     } else if (screenWidth >= 768 && router.currentRoute.path.startsWith("/m")) {
-    //         // 如果屏幕宽度大于等于 760，并且当前路由路径以 /m 开头，则去掉 /m
-    //         router.replace(router.currentRoute.path.substring(2));
-    //         context.commit("ADAPT", 0);
-    //     }
-    // },
     changerouter(content, path) {
         const currentPath = router.currentRoute.path;
         // 判断路径前缀
@@ -211,6 +200,7 @@ const mutations = {
     },
     SWITCHTHEME(state) {
         state.theme = !state.theme;
+        localStorage.setItem('theme', state.theme ? 'light-theme' : 'dark-theme');
     }
 };
 
@@ -223,6 +213,13 @@ const getters = {
     nitice_info(state) {
         return state.init.notice
     },
+    themeColor(state) {
+        const storageTheme = localStorage.getItem('theme')
+        if (storageTheme === 'dark-theme') {
+            state.theme = false
+        }
+        return state.theme ? 'light-theme' : 'dark-theme'
+    }
 };
 
 // 创建并导出
