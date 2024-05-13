@@ -1,5 +1,8 @@
 # web-chatgpt-vue
 
+## 线上效果
+[国内ChatGPT](czt666.cn/gpt)
+
 ## Project setup
 ```
 npm install
