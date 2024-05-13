@@ -1,29 +1,13 @@
 # web-chatgpt-vue
 
 ## 线上效果
-[国内ChatGPT](https://czt666.cn/gpt)
+访问[国内ChatGPT](https://czt666.cn/gpt)体验该项目的在线版本
 
-## Project setup
-```
-npm install
-```
+## 后端服务
+本前端项目配套的后端服务代码仓库位于：[web-chatgpt-node](https://github.com/czt6666/web-chatgpt-node)。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### hello!
+## 功能
+- **实时对话**：用户可以实时输入文本，并接收到AI的响应，类似于与真人进行聊天。
+- **历史记录**：对话的历史可以保存，用户可以查看之前的对话内容。
+- **多语言支持**：尽管主要是为中文用户设计，该系统可能支持多种语言，依赖于后端模型的配置。
+- **用户界面定制**：前端界面提供一些定制选项，如主题切换等功能，以优化用户体验。
